@@ -61,6 +61,9 @@ The results of the max pooling operation from each filter are then used to form 
 \label{sec:cnn_code}
 In this section, we focus on building convolutional networks for code changes to solve the just-in-time defect prediction problem. 
 
-Code changes, although it can be viewed as a sequence of words, differs from natural language mainly because of its structure. The natural language carries sequences of words, and the semantics of the natural language can be inferred from a bag of words~\cite{ng1997corpus}. On the other hand, the code changes includes a change in different files and different kinds of changes (removals or additions) for each file. Hence, to extract silent features from the code changes, the convolutional networks should obey the code changes structure. 
+Code change, although it can be viewed as a sequence of words, differs from natural language mainly because of its structure. The natural language carries sequences of words, and the semantics of the natural language can be inferred from a bag of words~\cite{ng1997corpus}. On the other hand, the code change includes a change in different files and different kinds of changes (removals or additions) for each file. Hence, to extract salient features from the code changes, the convolutional networks should obey the code changes structure. 
+Based on the aforementioned considerations, we propose novel neural networks for extracting silent features from code changes based on convolutional neural networks. 
+
+Given a code change $\mathcal{C}$ including a change in different source code files $[F_1, \dots, F_n]$, we aim to extract salient features for each different file $F_i$. The salient features of each file are then concatenated to each other to represent the features for the given code change.  
 
 
