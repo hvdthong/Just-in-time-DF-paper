@@ -52,7 +52,7 @@ By applying the filter $f$ on every $k$-words of the commit message, the CNN is 
 
 \begin{equation}
 \label{eq:max_pooling_msg}
-\underset{1 \leq i \leg |m| - k + 1}{max} c_i
+\underset{1 \leq i \leq |m| - k + 1}{max} c_i
 \end{equation}
 
 The results of the max pooling operation from each filter are then used to form an embedding vector (i.e., $z_\textbf{m}$) of the commit message (see Figure~\ref{fig:overview}). 
