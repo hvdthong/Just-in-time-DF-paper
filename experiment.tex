@@ -26,7 +26,7 @@ We compare our proposed model with the Just-in-Time (JIT) defect prediction appr
   \caption{The AUC results of DeepJIT vs. with other baselines in three settings: short-period, long-period, and random}
     \begin{tabular}{|l|c|c|c|c|c|c|}
     \hline
-    \multirow{}{}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
+    \multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
 \cline{2-7}          & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} \\
     \hline
     \hline
@@ -46,12 +46,13 @@ We compare our proposed model with the Just-in-Time (JIT) defect prediction appr
   \centering
   \caption{Add caption}
     \begin{tabular}{|l|c|c|c|c|c|c|}
-    \toprule
+    \hline
     \multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
-\cmidrule{2-7}          & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} \\
-    \midrule
+\cline{2-7}          & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} \\
+    \hline
+    \hline
     DeepJIT-Msg & 0.609 & 0.638 & 0.641 & 0.583 & 0.659 & 0.689 \\
-    \midrule
+    \hline
     DeepJIT-Code & 0.734 & 0.727 & 0.738 & 0.769 & 0.738 & 0.729 \\
     \midrule
     DeepJIT & \textbf{0.764} & \textbf{0.765} & \textbf{0.768} & \textbf{0.781} & \textbf{0.771} \\
@@ -61,6 +62,22 @@ We compare our proposed model with the Just-in-Time (JIT) defect prediction appr
 \end{table*}%
 
 \noindent \textbf{RQ3: Does the proposed model benefit from the manually extracted code changes features?}
+
+\begin{table*}[t!]
+  \centering
+  \caption{Add caption}
+    \begin{tabular}{|l|c|c|c|c|c|c|}
+    \toprule
+    \multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
+\cmidrule{2-7}          & Short-Period & Long-period & Random & Short-Period & Long-period & Random \\
+    \midrule
+    DeepJIT & 0.764 & 0.765 & 0.768 & 0.781 & 0.771 & 0.751 \\
+    \midrule
+    DeepJIT-Combined & 0.788 & 0.786 & 0.779 & 0.814 & 0.799 & 0.76 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table*}%
 
 \noindent \textbf{RQ4: How are the time costs of the proposed model?}
 
