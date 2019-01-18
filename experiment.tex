@@ -18,7 +18,7 @@ We compare our proposed model with the Just-in-Time (JIT) defect prediction appr
 \center
 \includegraphics[scale=0.36]{figs/split.pdf}
 \caption{An example of choosing the data for training proposed model. The last period will be used as testing data.}
-\label{fig:overview}
+\label{fig:splitting}
 \end{figure}
 
 \begin{table*}[t!]
@@ -37,14 +37,14 @@ We compare our proposed model with the Just-in-Time (JIT) defect prediction appr
     DeepJIT & \textbf{0.764} & \textbf{0.765} & \textbf{0.768} & \textbf{0.781} & \textbf{0.771} & \textbf{0.751} \\
     \hline
     \end{tabular}%
-  \label{tab:addlabel}%
+  \label{tab:results}%
 \end{table*}%
 
 \noindent \textbf{RQ2: Does the proposed model benefit both commit message and the code changes?}
 
 \begin{table*}[t!]
   \centering
-  \caption{Add caption}
+  \caption{Contribution of feature components in DeepJIT}
     \begin{tabular}{|l|c|c|c|c|c|c|}
     \hline
     \multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
@@ -54,29 +54,30 @@ We compare our proposed model with the Just-in-Time (JIT) defect prediction appr
     DeepJIT-Msg & 0.609 & 0.638 & 0.641 & 0.583 & 0.659 & 0.689 \\
     \hline
     DeepJIT-Code & 0.734 & 0.727 & 0.738 & 0.769 & 0.738 & 0.729 \\
-    \midrule
+    \hline
     DeepJIT & \textbf{0.764} & \textbf{0.765} & \textbf{0.768} & \textbf{0.781} & \textbf{0.771} \\
-    \bottomrule
+    \hline
     \end{tabular}%
-  \label{tab:addlabel}%
+  \label{tab:variants}%
 \end{table*}%
 
 \noindent \textbf{RQ3: Does the proposed model benefit from the manually extracted code changes features?}
 
 \begin{table*}[t!]
   \centering
-  \caption{Add caption}
+  \caption{Combination of DeepJIT with JIT's features}
     \begin{tabular}{|l|c|c|c|c|c|c|}
-    \toprule
+    \hline
     \multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
-\cmidrule{2-7}          & Short-Period & Long-period & Random & Short-Period & Long-period & Random \\
-    \midrule
+\cline{2-7}          & Short-Period & Long-period & Random & Short-Period & Long-period & Random \\
+    \hline
+    \hline
     DeepJIT & 0.764 & 0.765 & 0.768 & 0.781 & 0.771 & 0.751 \\
-    \midrule
-    DeepJIT-Combined & 0.788 & 0.786 & 0.779 & 0.814 & 0.799 & 0.76 \\
-    \bottomrule
+    \hline
+    DeepJIT-Combined & \textbf{0.788} & \textbf{0.786} & \textbf{0.779} & \textbf{0.814} & \textbf{0.799} & \text{0.760} \\
+    \hline
     \end{tabular}%
-  \label{tab:addlabel}%
+  \label{tab:combined}%
 \end{table*}%
 
 \noindent \textbf{RQ4: How are the time costs of the proposed model?}
