@@ -4,17 +4,64 @@
 \subsection{Dataset}
 \subsection{Baseline}
 \label{sec:baseline}
-We compare our proposed model with the Just-in-Time defect prediction 
+We compare our proposed model with the Just-in-Time (JIT) defect prediction approach mentioned in~\cite{mcintosh2018fix}. Different from the JIT model used to identify fix-inducing code changes, we train the model to identify bugs. We also use a nonlinear variant of multiple regression modeling to fit the JIT model. The nonlinear regression modeling has widely used in software engineering to understand the relationship between software development practices and software quality~\cite{zhou2011does, morales2015code, mcintosh2016empirical}. 
+
+\subsection{Evaluation Metric and Setting}
+\label{sec:metric_setting}
+
 \subsection{Research Questions and Results}
 \label{sec:rq_results}
-\noindent\textbf{RQ1: How effective is our proposed deep learning model compared to the state-of-the-art baseline?}
 
-%result in a table
+\noindent \textbf{RQ1: How effective is our proposed deep learning model compared to the state-of-the-art baseline?}
 
-%discuss about ...
-\noindent\textbf{RQ2: Does the proposed model benefit both commit message and the code changes?}
+\begin{figure}
+\center
+\includegraphics[scale=0.36]{figs/split.pdf}
+\caption{An example of choosing the data for training proposed model. The last period will be used as testing data.}
+\label{fig:overview}
+\end{figure}
 
-\noindent\textbf{RQ3: Does the proposed model benefit from the manually extracted code changes features?}
+\begin{table*}[t!]
+  \centering
+  \caption{The AUC results of DeepJIT vs. with other baselines in three settings: short-period, long-period, and random}
+    \begin{tabular}{|l|c|c|c|c|c|c|}
+    \hline
+    \multirow{}{}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
+\cline{2-7}          & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} \\
+    \hline
+    \hline
+    JIT   & 0.703 & 0.702 & 0.701 & 0.711 & 0.706 & 0.691 \\
+    \hline
+    DBNJIT & 0.714 & 0.708 & 0.705 & 0.716 & 0.712 & 0.694 \\
+    \hline
+    DeepJIT & \textbf{0.764} & \textbf{0.765} & \textbf{0.768} & \textbf{0.781} & \textbf{0.771} & \textbf{0.751} \\
+    \hline
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table*}%
 
-\noindent\textbf{RQ4: How are the time costs of the proposed model?}
+\noindent \textbf{RQ2: Does the proposed model benefit both commit message and the code changes?}
+
+\begin{table*}[t!]
+  \centering
+  \caption{Add caption}
+    \begin{tabular}{|l|c|c|c|c|c|c|}
+    \toprule
+    \multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
+\cmidrule{2-7}          & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} \\
+    \midrule
+    DeepJIT-Msg & 0.609 & 0.638 & 0.641 & 0.583 & 0.659 & 0.689 \\
+    \midrule
+    DeepJIT-Code & 0.734 & 0.727 & 0.738 & 0.769 & 0.738 & 0.729 \\
+    \midrule
+    DeepJIT & \textbf{0.764} & \textbf{0.765} & \textbf{0.768} & \textbf{0.781} & \textbf{0.771} \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table*}%
+
+\noindent \textbf{RQ3: Does the proposed model benefit from the manually extracted code changes features?}
+
+\noindent \textbf{RQ4: How are the time costs of the proposed model?}
+
 
