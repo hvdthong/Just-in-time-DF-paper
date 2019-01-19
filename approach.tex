@@ -30,14 +30,14 @@ The underlying deep neural network for commit message is a Convolutional Neural 
 
 Given a commit message $\textbf{m}$ which is essentially a sequence of words $[w_1, \dots, w_{|m|}]$. We aim to obtains its matrix representation $\textbf{m} \rightarrow \textbf{M} \in \mathbb{R}^{|m| \times d_m}$, where the matrix $\textbf{M}$ comprises a set of words $w_i \rightarrow W_i$, $i = 1, \dots, |m|$ in the given commit message. Each word $w_i$ now is represented by an embedding vector, i.e., $W_i \in \mathbb{R}^{d_m}$, where $d_m$ is a $d_m$-dimensional vector of a word appearing in the commit message. 
 
-Following the previous works~\cite{kim2014convolutional, zhang2015character}, the $d_m$-dimensional representing an embedding vector extracted from an embedding matrix which is randomly initialized and jointly learned with the CNN model. In our paper, the embedding matrix of commit message is randomly initialized and learned during the training process. Hence, the matrix representation $\textbf{M}$ of the commit message $\textbf{m}$ with a sequence of $|m|$ words can be represented as following:
+Following the previous works~\cite{kim2014convolutional, zhang2015character}, the $d_m$-dimensional representing an embedding vector extracted from an embedding matrix which is randomly initialized and jointly learned with the CNN model. In our paper, the embedding matrix of commit message is randomly initialized and learned during the training process. Hence, the matrix representation $\textbf{M}$ of the commit message $\textbf{m}$ with a sequence of $|m|$ words can be represented as follows:
 \begin{equation}
 \label{eq:representation_msg}
     \textbf{M} = [W_1, \dots, W_{|m|}]
 \end{equation}
 For the purpose of parallelization, all commit messages are padded or truncated to the same length $|m|$. 
 
-To extract the commit message's salient features, a filter $f \in \mathbb{R}^{k \times {d_m}}$, followed by a non-linear activation function $\alpha (.)$, is applied to a window of $k$ words to produce a new feature as following:
+To extract the commit message's salient features, a filter $f \in \mathbb{R}^{k \times {d_m}}$, followed by a non-linear activation function $\alpha (.)$, is applied to a window of $k$ words to produce a new feature as follows:
 \begin{equation}
 \label{eq:filter_msg}
     c_i = \alpha(f * M_{i:i+k-1} + b_i)
@@ -48,29 +48,57 @@ where $*$ is a sum of element-wise product, and $b_i \in \mathbb{R}$ is the bias
 \textbf{c} = [c_1, \dots, c_{|m| - k + 1}]
 \end{equation}
 
-By applying the filter $f$ on every $k$-words of the commit message, the CNN is able to exploit the semantic information of its input. In practice, the CNN model may include multiple filters with different $k$. These hyperparameters need to be set by the user before starting the training process. To characterize the commit message, we apply a max pooling operation~\cite{lecun2015deep} over the output vector $\textbf{c}$ to obtain the highest value as following: 
+By applying the filter $f$ on every $k$-words of the commit message, the CNN is able to exploit the semantic information of its input. In practice, the CNN model may include multiple filters with different $k$. These hyperparameters need to be set by the user before starting the training process. To characterize the commit message, we apply a max pooling operation~\cite{lecun2015deep} over the output vector $\textbf{c}$ to obtain the highest value as follows: 
 
 \begin{equation}
 \label{eq:max_pooling_msg}
 \underset{1 \leq i \leq |m| - k + 1}{max} c_i
 \end{equation}
 
-The results of the max pooling operation from each filter are then used to form an embedding vector (i.e., $z_\textbf{m}$) of the commit message (see Figure~\ref{fig:overview}). 
+The results of the max pooling operation from each filter are then used to form an embedding vector (i.e., $\textbf{z}_\textbf{m}$) of the commit message (see Figure~\ref{fig:overview}). 
 
 \subsection{Convolutional Network Architecture for Code Changes}
 \label{sec:cnn_code}
-In this section, we focus on building convolutional networks for code changes to solve the just-in-time defect prediction problem. 
 
+\begin{figure*}
+	\center
+	\includegraphics[scale=0.25]{figs/code_framework.pdf}
+	\caption{The overall structure of convolutional neural network for each change file in code change. The first convolutional and pooling layers use to learn the semantic features of each added or removed code line based on the words within the added or removed line, and the subsequent convolutional and pooling layers aim to learn the interactions between added or removed code line with respect to the code change structure. The output of the convolutional neural network is the embedding vector $\textbf{z}_{\overline{\textbf{F}}_{i}}$ representing the salient features of the each change file.}
+	\label{fig:code}
+\end{figure*}
+
+In this section, we focus on building convolutional networks for code changes to solve the just-in-time defect prediction problem. 
 Code change, although it can be viewed as a sequence of words, differs from natural language mainly because of its structure. The natural language carries sequences of words, and the semantics of the natural language can be inferred from a bag of words~\cite{ng1997corpus}. On the other hand, the code change includes a change in different files and different kinds of changes (removals or additions) for each file. Hence, to extract salient features from the code changes, the convolutional networks should obey the code changes structure. 
 Based on the aforementioned considerations, we propose novel neural networks for extracting silent features from code changes based on convolutional neural networks. 
 
 Given a code change $\mathcal{C}$ including a change in different source code files $[\text{F}_1, \dots, \text{F}_n]$, where $n$ is a number of files in the code change, we aim to extract salient features for each different file $\text{F}_i$. The salient features of each file are then concatenated to each other to represent the features for the given code change. In the rest of this section, we explain how the convolutional networks can extract the salient features for each file in the code change and how these salient features are concatenated. 
 
-Suppose $\text{F}_i$ represents a change in each different file, $\text{F}_i$ contains a number of lines (removals or additions) in a code change file. We also have a sequence of words in each line in $\text{F}_i$. Similar to the section~\ref{sec:cnn_msg}, we first aim to obtain its matrix representation $\text{F}_i \rightarrow \textbf{\text{F}}_i \in \mathbb{R}^{\mathcal{N} \times \mathcal{L} \times{d_c}}$, where $\mathcal{N}$ is the number of lines in a code change file, $\mathcal{L}$ presents a sequence of words in each line, and $d_c$ is a $d_c$-dimensional vector of a word appearing in the $\text{F}_i$. For the purposed of parallelization, all the source code files are padded or truncated to the same $\mathcal{N}$ and $\mathcal{L}$. For each line $\mathcal{N}_i \in \mathbb{R}^{\mathcal{L} \times d_c}$, we follow the convolutional network architecture for commit message described in section~\ref{sec:cnn_msg} to extract its embedding vector, called $\textbf{z}_{\mathcal{N}_i}$. The embedding vector $\textbf{z}_{\mathcal{N}_i}$ aims to learn the salient features or the semantic of a code line based on the words within the code line. These features $\textbf{z}_{\mathcal{N}_i}$ are then concatenated to produce the new representation of the code change file $\text{F}_i$ as following: 
+Suppose $\text{F}_i$ represents a change in each different file, $\text{F}_i$ contains a number of lines (removals or additions) in a code change file. We also have a sequence of words in each line in $\text{F}_i$. Similar to the section~\ref{sec:cnn_msg}, we first aim to obtain its matrix representation $\text{F}_i \rightarrow \textbf{\text{F}}_i \in \mathbb{R}^{\mathcal{N} \times \mathcal{L} \times{d_c}}$, where $\mathcal{N}$ is the number of lines in a code change file, $\mathcal{L}$ presents a sequence of words in each line, and $d_c$ is a $d_c$-dimensional vector of a word appearing in the $\text{F}_i$. For the purposed of parallelization, all the source code files are padded or truncated to the same $\mathcal{N}$ and $\mathcal{L}$. 
+
+For each line $\mathcal{N}_i \in \mathbb{R}^{\mathcal{L} \times d_c}$, we follow the convolutional network architecture for commit message described in section~\ref{sec:cnn_msg} to extract its embedding vector, called $\textbf{z}_{\mathcal{N}_i}$. The embedding vector $\textbf{z}_{\mathcal{N}_i}$ aims to learn the salient features or the semantic of a code line based on the words within the code line. These features $\textbf{z}_{\mathcal{N}_i}$ are then stacked to produce the new representation of the code change file $\text{F}_i$ as follows: 
 \begin{equation}
 \label{eq:concatenate}
-\widehat{\textbf{F}}_{i} = []
+\overline{\textbf{F}}_{i} = [\textbf{z}_{\mathcal{N}_1}, \dots, \textbf{z}_{\mathcal{N}_{|\mathcal{N}|}}]
 \end{equation}
+
+We again apply the convolutional layer and pooling layer on the new representation of the code change (i.e., $\overline{\textbf{F}}_{i}$) to extract its embedding vector, namely $\textbf{z}_{\overline{\textbf{F}}_{i}}$. The $\textbf{z}_{\overline{\textbf{F}}_{i}}$ aims to learn the salient features or the semantics conveyed by the interactions between added or removed lines. Figure~\ref{fig:code} presents an overall convolutional network architecture for each change file $F_i$ in code changes. The first convolutional and pooling layers aim to learn a new representation of the file, and the subsequent convolutional and pooling layers aim to extract the salient features from the new representation of the change file. 
+
+For each change file $\text{F}_i \in C$, we build its embedding vector $\textbf{z}_{\overline{\textbf{F}}_{i}}$. These embedding vectors are then concatenated to build a new embedding vector representing the salient features of the code change $C$ as follows: 
+\begin{equation}
+\label{eq:concatenate_code}
+\textbf{z}_C = \textbf{z}_{\overline{\textbf{F}}_{1}} \oplus \dots \oplus \textbf{z}_{\overline{\textbf{F}}_{n}}
+\end{equation}
+where $\oplus$ is the concatenation operator. 
 
 %For each line $\mathcal{L}_i$, we follow the convolutional networks described in section~\ref{sec:cnn_msg} to extract its features, called $\textbf{z}_{\mathcal{L}_i}$.
 
+\subsection{Feature Combination}
+\label{sec:ftr_combine}
+\begin{figure}
+	\center
+	\includegraphics[width=8cm,height=4cm]{figs/code_msg.pdf}
+	\caption{}
+	\label{fig:code_msg}
+\end{figure}
+
+Figure shows the details of architecture of the feature combination. The inputs of this architecture are the two embedding vectors $z_\textbf{m}$ and $\textbf{z}_C$ which represent the salient features extracted from the commit message and code change, respectively. These vectors are then concatenated to build a new vector representing the commit change. 
