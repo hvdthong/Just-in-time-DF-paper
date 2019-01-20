@@ -1,13 +1,50 @@
 \section{Experiments}
 \label{sec:exp}
-In this section, we first describe our dataset and how we preprocess it. We
-then introduce all baselines and evaluation metrics. Finally, we present
-our research questions and results.
+In this section, we first describe the dataset used in our paper. We then introduce all baselines, evaluation metric, and setting. Finally, we present our research questions and results.
 
 \subsection{Dataset}
+\label{sec:dataset}
+\cmt{TODO: add the information about the dataset}
+
 \subsection{Baseline}
 \label{sec:baseline}
+
 We compare our proposed model with the Just-in-Time (JIT) defect prediction approach mentioned in~\cite{mcintosh2018fix}. Different from the JIT model used to identify fix-inducing code changes, we train the model to identify bugs. We also use a nonlinear variant of multiple regression modeling to fit the JIT model. The nonlinear regression modeling has widely used in software engineering to understand the relationship between software development practices and software quality~\cite{zhou2011does, morales2015code, mcintosh2016empirical}. 
+
+\subsection{Training and hyperparameters}
+\label{sec:training_parameters}
+
+%We empirically run PatchNet on different the number of convolutional filters and number of convolutional filter length and select the best number of convolutional filters and filter length for our model. %(i.e., $k=1$ and $k=2$) having length 64 on both \textit{commit message module} and \textit{commit code module} for training PatchNet. 
+
+% PatchNet also has a number of other hyperparameters. 
+% We set the size of PatchNet's hidden layer ($\textbf{h}$), $l_2$ regularization, and the dropout rate to be 100, $1e-5$, and 0.5, respectively. The dimensions of
+% the word vectors in commit message $d_m$ and code changes $d_c$ are set to
+% 50. PatchNet is trained using SGD~\cite{bottou2010large} with shuffled
+% mini-batches. The batch size is set to 32. We train PatchNet for 25 epochs
+% and apply the early stopping strategy~\cite{prechelt1998automatic}, i.e.,
+% we stop the training if there has been no update to the loss value (see Equation~\ref{eq:cost}) for the last 5 epochs. These parameters follow a prior work~\cite{severyn2015learning}. 
+
+% The parameters \jl{hyperparameters?} of PatchNet were chosen as follows:
+% the number of convolutional filters, the size of PatchNet's hidden layer
+% ($\textbf{h}$), $l_2$ regularization \jl{I don't understand what is the
+%   parameter here}, and the dropout rate to be 64, 100, $1e-5$, and 0.5,
+% respectively \jl{This is hard to read - the respectively is too complex.
+%   Just give the numbers one by one.  Or consider making a table.}. The
+% dimensions of the word vectors in commit message $d_m$ and code changes
+% $d_c$ are set to 50. PatchNet is trained using SGD~\cite{bottou2010large}
+% \jl{I thought we use Adam, which is different than SGD.} with shuffled
+% mini-batches. The batch size is set to 32. We train PatchNet for 25 epochs
+% and apply the early stopping strategy~\cite{prechelt1998automatic}, i.e.,
+% we stop the training if there has been no update to the loss value (see
+% Equation~\ref{eq:cost}) for the last 5 epochs. All these parameters of our
+% model are in line with a prior work~\cite{severyn2015learning, yu2014deep}.
+
+% \jh{Comment 8: Hyper-parameters: how do we select parameters for deep learning models? (reviewer C, meta reviewer)}
+
+% \jg{Julia: can you please check this section?}
+
+For the size of the convolutional filters, we choose 64. The size of DeepJIT's fully-connected layer described in Section~\ref{sec:ftr_combine} is set to 512. The word vectors dimension of the commit message ($d_m$) and code changes ($d_c$) are set to 64. We train DeepJIT using Adam~\cite{kingma2014adam} with shuffled mini-batches.  The batch size is set to 32. We train DeepJIT for 100 epochs. We also apply the early stopping strategy~\cite{prechelt1998automatic, caruana2001overfitting} to avoid overfitting problem during the training process. Typically, we stop the training if the value of the objective function (see Equation~\ref{eq:cost}) has been no update in the last 5 epochs. All these hyperparameters in our paper are widely used in the deep learning community~\cite{severyn2015learning, huo2016learning, huo2017enhancing, hinton2012improving}. 
+ 
 
 \subsection{Evaluation Metric and Setting}
 \label{sec:metric_setting}
