@@ -101,9 +101,47 @@ where $\oplus$ is the concatenation operator.
 	\label{fig:code_msg}
 \end{figure}
 
-Figure shows the details of architecture of the feature combination. The inputs of this architecture are the two embedding vectors $\textbf{z}_\textbf{m}$ and $\textbf{z}_C$ which represent the salient features extracted from the commit message and code change, respectively. These vectors are then concatenated to build a new vector representing the commit change:
+Figure~\ref{fig:code_msg} shows the details of architecture of the feature combination. The inputs of this architecture are the two embedding vectors $\textbf{z}_\textbf{m}$ and $\textbf{z}_C$ which represent the salient features extracted from the commit message and code change, respectively. 
+
+These vectors are then concatenated to generate a unified feature representation, i.e., a new vector ($\textbf{z}$), representing the commit change:
 \begin{equation}
 \label{eq:commit_code}
-z = \textbf{z}_\textbf{m} \oplus \textbf{z}_C
+\textbf{z} = \textbf{z}_\textbf{m} \oplus \textbf{z}_C
 \end{equation}
 
+The new vector then feed into a fully-connected (FC) layer, which outputs a vector $\textbf{h}$ as follows:
+\begin{equation}  % \footnotesize
+\label{eq:fully_layer}
+\textbf{h} = \alpha(\textbf{w}_\textbf{h} \cdot \textbf{z} + b_\textbf{h})
+\end{equation}
+where $\cdot$ is a dot product, $\textbf{w}_h$ is a weight matrix of the vector $\textbf{h}$ and the FC layer, $b_\textbf{h}$ is the bias value, and $\alpha(\cdot)$ is the RELU activation function. The vector $\textbf{h}$ is passed to an output layer to compute a probability score for a given commit:
+
+
+Finally, the vector $\mathbf{h}$ is passed to an output layer, which
+computes a probability score for a given patch:
+\begin{equation}  %\footnotesize
+p(y_i=1|x_i) = \frac{1}{1 + \exp({-\textbf{h} \cdot \textbf{w}_\textbf{o})}}
+\end{equation}
+where $\textbf{w}_\textbf{o}$ is the weight matrix between the FC layer and the output layer.
+
+\subsection{Parameters Learning}
+\label{sec:parameters}
+
+In the training process, DeepJIT aims to learn the following parameters: the
+word embedding matrices of commit messages and commit code in a given commit, the convolutional layers matrices, the weights and bias of
+the fully connected layer and the output layer. 
+
+In the \emph{Just-In-Time} defect prediction, only a few commits contain a buggy code while a large number of commits are clean. Such an imbalance nature increases the difficulty in learning a prediction function~\cite{chawla2004special}. Inspired by~\cite{zhou2006training, kukar1998cost}, we propose an unequal misclassification loss function which helps to reduce the negative influence of the imbalanced data. 
+
+Let $\textbf{w}_\textbf{n}$ and $\textbf{w}_\textbf{p}$ are the cost of incorrectly associating a commit change and the cost of missing a buggy commit change, respectively. The parameters of DeepJIT can be learned by minimizing the following objective function:
+\begin{equation} %\footnotesize
+\label{eq:cost}
+\begin{split}
+\mathcal{O} &= -\log\left( \prod_{i=1}^{} p(y_i|x_i) \right) + \frac{\lambda}{2} \|\theta\|_{2}^{2} \\
+&= -\sum_{i=1}^{} [ \textbf{w}_\textbf{n} (1 - y_i) \log(1 - p(y_i|x_i)) \\ 
+&+ \textbf{w}_\textbf{p} y_i \log (p(y_i|x_i)) ] + \frac{\lambda}{2} \|\theta\|_{2}^{2}
+\end{split}
+\end{equation}
+where $p(y_i|x_i)$ is the probability score from the output layer and $\theta$ contains all parameters our model. The term $\frac{\lambda}{2} \|\theta\|_{2}^{2}$ is used to mitigate data overfitting in training deep neural networks~\cite{caruana2001overfitting}. We also apply the dropout technique~\cite{srivastava2014dropout} to improve the robustness of our model. 
+
+We choose Adam~\cite{kingma2014adam}, which is a variant of stochastic gradient descent (SGD)~\cite{bottou2010large}, to minimize the objective function in the equation~\ref{eq:cost}. We choose Adam due to its computational efficiency and low memory requirements compared to other optimization techniques~\cite{kingma2014adam, anthimopoulos2016lung, arora2018optimization}. To efficiently compute the gradients in linear time (with respect to the neural network size), we use backpropagation~\cite{hagan1994training}, which is a simple implementation of the chain rule of partial derivatives.
