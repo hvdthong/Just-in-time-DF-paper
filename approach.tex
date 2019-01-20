@@ -101,4 +101,9 @@ where $\oplus$ is the concatenation operator.
 	\label{fig:code_msg}
 \end{figure}
 
-Figure shows the details of architecture of the feature combination. The inputs of this architecture are the two embedding vectors $z_\textbf{m}$ and $\textbf{z}_C$ which represent the salient features extracted from the commit message and code change, respectively. These vectors are then concatenated to build a new vector representing the commit change. 
+Figure shows the details of architecture of the feature combination. The inputs of this architecture are the two embedding vectors $\textbf{z}_\textbf{m}$ and $\textbf{z}_C$ which represent the salient features extracted from the commit message and code change, respectively. These vectors are then concatenated to build a new vector representing the commit change:
+\begin{equation}
+\label{eq:commit_code}
+z = \textbf{z}_\textbf{m} \oplus \textbf{z}_C
+\end{equation}
+
