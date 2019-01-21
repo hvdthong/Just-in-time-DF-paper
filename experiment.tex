@@ -10,11 +10,9 @@ In this section, we first describe the dataset used in our paper. We then introd
 \label{sec:baseline}
 We compared DeepJIT with two other state-of-the-art baselines in the \emph{Just-In-Time} (JIT) defect prediction:
 \begin{itemize}
-\item JIT: The method for identifying fix-inducing code changes was proposed by McIntosh and Kamei~\cite{mcintosh2018fix}. The me
-\item asdfas
+\item JIT: The method for identifying fix-inducing code changes was proposed by McIntosh and Kamei~\cite{mcintosh2018fix}. The method used a nonlinear variant of multiple regression modeling~\cite{fox1997applied} to build a classification model for automatically identifying defects in commits. The set of code features, using six families of code change properties, are primarily derived from prior studies~\cite{Kamei:2013:LES, Kim:2008:CSC, Kononenko:2015, Mockus2000}. These properties are: the magnitude of change, the dispersion of the changes, the defect proneness of prior changes, the experience of the author, the code reviewers, and the degree of participation in the code review. 
+\item DBN-JIT: The method adopted Deep Belief Network (DBN)~\cite{hinton2006reducing}, one of the state-of-the-art deep learning approaches, to generate a more expressive feature set from the initial feature set. The generated feature set,  
 \end{itemize}
-
-We compare our proposed model with the Just-in-Time (JIT) defect prediction approach mentioned in~\cite{mcintosh2018fix}. Different from the JIT model used to identify fix-inducing code changes, we train the model to identify bugs. We also use a nonlinear variant of multiple regression modeling to fit the JIT model. The nonlinear regression modeling has widely used in software engineering to understand the relationship between software development practices and software quality~\cite{zhou2011does, morales2015code, mcintosh2016empirical}. 
 
 \subsection{Training and hyperparameters}
 \label{sec:training_parameters}
