@@ -11,16 +11,30 @@ In this section, we first describe the dataset used in our paper. We then introd
 We compared DeepJIT with two other state-of-the-art baselines in the \emph{Just-In-Time} (JIT) defect prediction:
 \begin{itemize}
 \item JIT: The method for identifying fix-inducing code changes was proposed by McIntosh and Kamei~\cite{mcintosh2018fix}. The method used a nonlinear variant of multiple regression modeling~\cite{fox1997applied} to build a classification model for automatically identifying defects in commits. The set of code features, using six families of code change properties, were primarily derived from prior studies~\cite{Kamei:2013:LES, Kim:2008:CSC, Kononenko:2015, Mockus2000}. These properties were: the magnitude of change, the dispersion of the changes, the defect proneness of prior changes, the experience of the author, the code reviewers, and the degree of participation in the code review. 
-\item DBN-JIT: The method adopted Deep Belief Network (DBN)~\cite{hinton2006reducing}, one of the state-of-the-art deep learning approaches, to generate a more expressive feature set from the initial feature set~\cite{Yang:2015:DLJ}. The generated feature set, a complicated nonlinear combination of the initial features, was put to a machine learning classifier to predict defects in commits. 
+\item DBN-JIT: The method adopted Deep Belief Network (DBN)~\cite{hinton2006reducing}, one of the state-of-the-art deep learning approaches, to generate a more expressive feature set from the initial feature set~\cite{Yang:2015:DLJ}. The generated feature set, a complicated nonlinear combination of the initial features, was put to a machine learning classifier~\cite{nasrabadi2007pattern} to predict defects in commits. 
 \end{itemize}
 
 \subsection{Training and hyperparameters}
 \label{sec:training_parameters}
 For the size of the convolutional filters, we choose 64. The size of DeepJIT's fully-connected layer described in Section~\ref{sec:ftr_combine} is set to 512. The word vectors dimension of the commit message ($d_m$) and code changes ($d_c$) are set to 64. We train DeepJIT using Adam~\cite{kingma2014adam} with shuffled mini-batches.  The batch size is set to 32. We train DeepJIT for 100 epochs. We also apply the early stopping strategy~\cite{prechelt1998automatic, caruana2001overfitting} to avoid overfitting problem during the training process. Typically, we stop the training if the value of the objective function (see Equation~\ref{eq:cost}) has been no update in the last 5 epochs. All these hyperparameters in our paper are widely used in the deep learning community~\cite{severyn2015learning, huo2016learning, huo2017enhancing, hinton2012improving}. 
  
+\subsection{Evaluation Metric}
+\label{sec:metric}
+To evaluate the accuracy of \emph{Just-In-Time} (JIT) models, we calculate  threshold-independent measures of model performance. Since our dataset is imbalanced data, we avoid using threshold-dependent measures (i.e., precision, recall, or F1) since these measures strongly depend on arbitraily thresholds~\cite{nguyen2009learning, gu2008data}. Following the previous work~\cite{mcintosh2018fix},  we use the Area Under the receiver operator characteristics
+Curve (AUC) to measure the power of models' discriminatory, i.e., their ability to differentiate between defects or clean commits. AUC computes the area under the curve ploting the true 
 
-\subsection{Evaluation Metric and Setting}
-\label{sec:metric_setting}
+We
+avoid threshold-dependent measures like precision and recall, which depend on arbitrarily thresholds and are sensitive to imbalanced data.
+The Area Under the receiver operator characteristics
+Curve (AUC) is a measure of a model’s discriminatory power,
+i.e., its ability to differentiate between fix-inducing and clean
+changes. AUC is computed by measuring the area under
+the curve that plots the true positive rate against the false
+positive rate, while varying the threshold that is used to
+determine if a change is classified as fix-inducing or not.
+Values of AUC range between 0 (worst discrimination), 0.5
+(random guessing), and 1 (perfect discrimination).
+
 
 \subsection{Research Questions and Results}
 \label{sec:rq_results}
