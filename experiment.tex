@@ -26,32 +26,82 @@ Curve (AUC) to measure the power of models' discriminatory, i.e., their ability 
 \subsection{Research Questions and Results}
 \label{sec:rq_results}
 
-\noindent \textbf{RQ1: How effective is our proposed deep learning model compared to the state-of-the-art baseline?}
+\noindent \textbf{RQ1: How effective is DeepJIT compared to the state-of-the-art baseline?}
 
 \begin{figure}
-\center
-\includegraphics[scale=0.36]{figs/split.pdf}
-\caption{An example of choosing the data for training proposed model. The last period will be used as testing data.}
-\label{fig:splitting}
+	\center
+	\includegraphics[scale=0.36]{figs/split.pdf}
+	\caption{An example of choosing the training data for short-period and long-period models. The last period will be used as testing data.}
+	\label{fig:splitting}
 \end{figure}
 
+To address RQ1, we evaluate how a JIT model, which is trained by a train data, can be used to predict a test data. Typically, we train three types of JIT models: 
+\begin{itemize}
+\item \textbf{Random models:} To evaluate machine learning algorithm, most people use $k$-fold cross-validation~\cite{kohavi1995study} in which a dataset is randomly divided to $k$ folds, each fold is considered as test data for evaluating JIT model while $k - 1$ folds are considered as train data. In this case, the JIT model is trained on a mixture of past and future data. In our paper, we set $k = 5$.
+\item \textbf{Short-period models:} The JIT model is trained using commits that occurred at one time period. We assume that older commits changes may have characteristics that no longer effects to the latest commits. 
+\item \textbf{Long-period models:} Inspired by the work~\cite{rahman2013sample}, suggesting that larger amounts of training data tend to achieve a better performance in defect prediction problem, we train the JIT model using all commits that occurred before a particular period. We discover whether additional data may improve the performance of the JIT model. 
+\end{itemize} 
+
+Figure~\ref{fig:splitting} describes how the training data is selected to train short-period and long-period models. We use the last period (i.e., period 5) as a testing data. While the short-period model is trained using the commits that occurred during period 4, the long-period model is trained using the commits that occurred from period 1 to period 4. After training the short-period and long-period model, we measure their performance of these models using AUC described in Section~\ref{sec:metric}.
+
+Table~\ref{tab:results} shows the AUC results of DeepJIT as well as other baselines in three types of JIT models setting: random, short-period, and long-period. The difference between random models compared to short-period and long-period models is quite small (i.e., below 2.2\%) which suggests that there is no difference between training on past or future data. \cmt{TODO: Prof. Hoa, do you have any explaination about it?} In the QT project, DeepJIT achieves AUC scores of 0.768, 0.764, and 0.765 in three different JIT settings: random, short-period, and long-period, respectively. Comparing them to the best performing baseline (i.e., DBNJIT), DeepJIT constitute improvements of 8.96\%, 7.00\%, and 8.05\% in term of AUC. In the OPENSTACK project, DeepJIT 
+
+%To evaluate machine learning algorithm, most people use $k$-fold cross-validation~\cite{kohavi1995study} in which a dataset is randomly divided to $k$ folds, each fold is 
+%
+%A common strategy for evaluating machine learning
+%algorithms is $n$-fold cross-validation~\cite{kohavi1995study},
+%in which a dataset is randomly distributed among $n$ equal-sized buckets,
+%each of
+%which is considered as test data for a model trained on the contents of the
+%remaining $n-1$ buckets.  When data elements become available over time, as
+%is the case of Linux kernel patches, this strategy can result in testing a
+%model on data that predates some of the data on which the model was
+%trained.  Respecting the order in which patches are submitted,
+%however, would limit the amount of testing that can be done, given
+%the fairly small number of stable patches available.
+%
+%To address this issue, we first assess whether training on future data
+%helps or harms the accuracy of PatchNet on our dataset.  We first sort the
+%patches collected in Section~\ref{sec:data} from earliest to latest based
+%on the date when the patch author submitted the patch to maintainers. Then,
+%we divide the dataset into 5 mutually exclusive sets by date. Note that the
+%resulting five sets are not perfectly balanced, but they come close, with
+%stable patches making up 45\% to 55\% of each set.  Then, we repeat the
+%following process five times: take one set as a testing set and use the
+%remaining four sets for training. When we test on the first set, we observe
+%the impact of training only on future data.  When we test on the fifth set,
+%we observe the impact of training only on past data.  The other testing
+%sets use models trained on a mixture of past and future data.
+%
+%Table~\ref{tab:cross_valid_patchnet} shows the results of PatchNet on the
+%different test sets. The standard deviations are quite small (i.e., below
+%0.013), hence there is no difference between training on past or future
+%data.  Our dataset starts with Linux v3.0, which was released in 2011,
+%twenty years after the start of work on the Linux kernel.  The lack of
+%impact due to training on past or future data suggests that in such a
+%mature code base the properties that make a patch relevant for stable
+%kernels are fairly constant over time.  This property is indeed beneficial,
+%because it means that our approach can be used to identify stable-relevant commits that have been missed in older versions.  In subsequent research
+%questions, we thus retain the same five test and training sets.
+
+
 \begin{table*}[t!]
-  \centering
-  \caption{The AUC results of DeepJIT vs. with other baselines in three settings: short-period, long-period, and random}
-    \begin{tabular}{|l|c|c|c|c|c|c|}
-    \hline
-    \multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
-\cline{2-7}          & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} \\
-    \hline
-    \hline
-    JIT   & 0.703 & 0.702 & 0.701 & 0.711 & 0.706 & 0.691 \\
-    \hline
-    DBNJIT & 0.714 & 0.708 & 0.705 & 0.716 & 0.712 & 0.694 \\
-    \hline
-    DeepJIT & \textbf{0.764} & \textbf{0.765} & \textbf{0.768} & \textbf{0.781} & \textbf{0.771} & \textbf{0.751} \\
-    \hline
-    \end{tabular}%
-  \label{tab:results}%
+	\centering
+	\caption{The AUC results of DeepJIT vs. with other baselines in three types of JIT models: random, short-period, and long-period.}
+	\begin{tabular}{|l|c|c|c|c|c|c|}
+		\hline
+		\multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
+		\cline{2-7}          & Random & Short-Period & Long-period & Random & Short-Period & Long-period \\
+		\hline
+		\hline
+		JIT   & 0.701 & 0.703 & 0.702 & 0.691 & 0.711 & 0.706 \\
+		\hline
+		DBNJIT & 0.705 & 0.714 & 0.708 & 0.694 & 0.716 & 0.712 \\
+		\hline
+		DeepJIT & \textbf{0.768} & \textbf{0.764} & \textbf{0.765} & \textbf{0.751} & \textbf{0.781} & \textbf{0.771} \\
+		\hline
+	\end{tabular}%
+	\label{tab:results}%
 \end{table*}%
 
 \noindent \textbf{RQ2: Does the proposed model benefit both commit message and the code changes?}
