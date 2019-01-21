@@ -106,6 +106,12 @@ Table~\ref{tab:results} shows the AUC results of DeepJIT as well as other baseli
 
 \noindent \textbf{RQ2: Does the proposed model benefit both commit message and the code changes?}
 
+To answer this question, we employ an ablation test~\cite{korbar2017deep, liu2017deep}, by ignoring the commit message and the code change in a commit and then evaluate the AUC performance. Specifically, we create two different variants of DeepJIT, namely DeepJIT-Msg and DeeJIT-Code. 
+
+
+%o  answer  this  RQ,  we  conduct  an  ablation  test  [33],[42]  by  ignoring  the  commit  message,  the  code  changes,or  the  function  names  in  the  code  changes  in  a  givenpatch  one-at-a-time  and  evaluating  the  performance.  Wecreate  three  variants  of  PatchNet:  PatchNet-C,  PatchNet-M,  and  PatchNet-NN.  PatchNet-C  uses  only  code  changeinformation  while  PatchNet-M  uses  only  commit  messageinformation. PatchNet-NN uses both code change and com-
+%mit message information, but ignores the function names inthe code changes. We again use the five copies of the datasetdescribed in RQ1 and compute the various evaluation met-rics.Table  3  shows  that  the  performance  of  PatchNet  de-grades if we ignore any one of the considered types of in-formation. Accuracy, precision, recall, F1, and AUC drop by19.39%, 15.41%, 21.26%, 18.34%, and 16.06% respectively ifwe ignore commit messages. They drop by 16.96%, 14.62%,16.58%, 14.76%, and 14.21% respectively if we ignore codechanges. And they drop by 11.08%, 12.62%, 16.43%, 13.86%,and 11.98% respectively if we ignore function names. Thus,each  kind  of  information  contributes  to  PatchNet’s  perfor-mance.  Additionally,  the  drops  are  greatest  if  we  ignorecommit  messages,  indicating  that  they  are  slightly  moreimportant than the other two to PatchNet’s performance
+
 \begin{table*}[t!]
   \centering
   \caption{Contribution of feature components in DeepJIT}
