@@ -147,7 +147,7 @@ To answer this question, we employ an ablation test~\cite{korbar2017deep, liu201
   \label{tab:combined}%
 \end{table*}%
 
-To address this question, we incorporate the code features, derived from~\cite{mcintosh2018fix}, into our proposed model. Specifically, the code features, namely $\textbf{z}_\textbf{r}$ are concatenated with the two embedding vectors  $\textbf{z}_\textbf{m}$ and $\textbf{z}_C$, representing the salient features of commit message and code change (see Section~\ref{sec:ftr_combine}), to build a new single vector $\textbf{z}$ as follows:
+To address this question, we incorporate the code features, derived from~\cite{mcintosh2018fix}, into our proposed model. Specifically, the code features, namely $\textbf{z}_\textbf{r}$, are concatenated with the two embedding vectors  $\textbf{z}_\textbf{m}$ and $\textbf{z}_C$, representing the salient features of commit message and code change (see Section~\ref{sec:ftr_combine}), to build a new single vector $\textbf{z}$ as follows:
 \begin{equation}
 \label{eq:combined_ftr}
 \textbf{z} = \textbf{z}_\textbf{m} \oplus \textbf{z}_C \oplus \textbf{z}_\textbf{r}
