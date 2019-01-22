@@ -44,7 +44,7 @@ To address RQ1, we evaluate how a JIT model, which is trained by a train data, c
 
 Figure~\ref{fig:splitting} describes how the training data is selected to train short-period and long-period models. We use the last period (i.e., period 5) as a testing data. While the short-period model is trained using the commits that occurred during period 4, the long-period model is trained using the commits that occurred from period 1 to period 4. After training the short-period and long-period model, we measure their performance of these models using AUC described in Section~\ref{sec:metric}.
 
-Table~\ref{tab:results} shows the AUC results of DeepJIT as well as other baselines in three types of JIT models setting: random, short-period, and long-period. The difference between random models compared to short-period and long-period models is quite small (i.e., below 2.2\%) which suggests that there is no difference between training on past or future data. \cmt{TODO: Prof. Hoa, do you have any explaination about it?} In the QT project, DeepJIT achieves AUC scores of 0.768, 0.764, and 0.765 in three different JIT settings: random, short-period, and long-period, respectively. Comparing them to the best performing baseline (i.e., DBNJIT), DeepJIT constitute improvements of 8.96\%, 7.00\%, and 8.05\% in term of AUC. In the OPENSTACK project, DeepJIT also constitute improvements of 8.21\%, 9.08\%, and 8.29\% in term of AUC compared to DBNJIT (the best performing baseline). 
+Table~\ref{tab:results} shows the AUC results of DeepJIT as well as other baselines in three types of JIT models setting: random, short-period, and long-period. The difference between random models compared to short-period and long-period models is quite small (i.e., below 2.2\%) which suggests that there is no difference between training on past or future data. \cmt{TODO: Prof. Hoa, do you have any explaination about it?} In the QT project, DeepJIT achieves AUC scores of 0.768, 0.764, and 0.765 in three different JIT settings: random, short-period, and long-period, respectively. Comparing them to the best performing baseline (i.e., DBNJIT), DeepJIT constitutes improvements of 8.96\%, 7.00\%, and 8.05\% in term of AUC. In the OPENSTACK project, DeepJIT also constitutes improvements of 8.21\%, 9.08\%, and 8.29\% in term of AUC compared to DBNJIT (the best performing baseline). 
 
 %To evaluate machine learning algorithm, most people use $k$-fold cross-validation~\cite{kohavi1995study} in which a dataset is randomly divided to $k$ folds, each fold is 
 %
@@ -91,7 +91,7 @@ Table~\ref{tab:results} shows the AUC results of DeepJIT as well as other baseli
 	\begin{tabular}{|l|c|c|c|c|c|c|}
 		\hline
 		\multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
-		\cline{2-7}          & Random & Short-Period & Long-period & Random & Short-Period & Long-period \\
+		\cline{2-7}          & Random & Short-period & Long-period & Random & Short-period & Long-period \\
 		\hline
 		\hline
 		JIT   & 0.701 & 0.703 & 0.702 & 0.691 & 0.711 & 0.706 \\
@@ -106,11 +106,7 @@ Table~\ref{tab:results} shows the AUC results of DeepJIT as well as other baseli
 
 \noindent \textbf{RQ2: Does the proposed model benefit both commit message and the code changes?}
 
-To answer this question, we employ an ablation test~\cite{korbar2017deep, liu2017deep}, by ignoring the commit message and the code change in a commit and then evaluate the AUC performance. Specifically, we create two different variants of DeepJIT, namely DeepJIT-Msg and DeeJIT-Code. DeepJIT-Msg only considers commit message information while DeepJIT-Code only uses commit code information. We again use the three types of model settings (i.e., random, short-period, and long period) to evaluate the AUC score. 
-
-
-%o  answer  this  RQ,  we  conduct  an  ablation  test  [33],[42]  by  ignoring  the  commit  message,  the  code  changes,or  the  function  names  in  the  code  changes  in  a  givenpatch  one-at-a-time  and  evaluating  the  performance.  Wecreate  three  variants  of  PatchNet:  PatchNet-C,  PatchNet-M,  and  PatchNet-NN.  PatchNet-C  uses  only  code  changeinformation  while  PatchNet-M  uses  only  commit  messageinformation. PatchNet-NN uses both code change and com-
-%mit message information, but ignores the function names inthe code changes. We again use the five copies of the datasetdescribed in RQ1 and compute the various evaluation met-rics.Table  3  shows  that  the  performance  of  PatchNet  de-grades if we ignore any one of the considered types of in-formation. Accuracy, precision, recall, F1, and AUC drop by19.39%, 15.41%, 21.26%, 18.34%, and 16.06% respectively ifwe ignore commit messages. They drop by 16.96%, 14.62%,16.58%, 14.76%, and 14.21% respectively if we ignore codechanges. And they drop by 11.08%, 12.62%, 16.43%, 13.86%,and 11.98% respectively if we ignore function names. Thus,each  kind  of  information  contributes  to  PatchNet’s  perfor-mance.  Additionally,  the  drops  are  greatest  if  we  ignorecommit  messages,  indicating  that  they  are  slightly  moreimportant than the other two to PatchNet’s performance
+To answer this question, we employ an ablation test~\cite{korbar2017deep, liu2017deep}, by ignoring the commit message and the code change in a commit and then evaluate the AUC performance. Specifically, we create two different variants of DeepJIT, namely DeepJIT-Msg and DeeJIT-Code. DeepJIT-Msg only considers commit message information while DeepJIT-Code only uses commit code information. We again use the three types of model settings (i.e., random, short-period, and long period) and the AUC scores to evaluate the performance of our models. Table~\ref{tab:variants} shows the performance of DeepJIT degrades if we ignore any one of the considered types of information (i.e., commit message or code changes). The AUC scores drop by 19.81\%, 28.45\%, and 19.01\% in the project QT and drop by 33.96\%, 16.99\%, and 9.01\% in the project OPENSTACK on the three types of JIT models if we ignore commit messages. The AUC scores drop by 4.07\%, 4.09\%, and 5.23\% in the project QT and drop by 1.56\%, 4.47\%, and 3.02\% in the project OPENSTACK on the three types of JIT models if we ignore code changes information. It suggests that each kind of information contributes to DeepJIT's performance. Moreover, it also indicates that the code changes are more important to detect defects in a commit than the commit message information.  
 
 \begin{table*}[t!]
   \centering
@@ -118,38 +114,63 @@ To answer this question, we employ an ablation test~\cite{korbar2017deep, liu201
     \begin{tabular}{|l|c|c|c|c|c|c|}
     \hline
     \multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
-\cline{2-7}          & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} & \multicolumn{1}{l|}{Short-Period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} \\
+\cline{2-7}          & \multicolumn{1}{l|}{Random} & \multicolumn{1}{l|}{Short-period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Random} & \multicolumn{1}{l|}{Short-period} & \multicolumn{1}{l|}{Long-period} \\
     \hline
     \hline
-    DeepJIT-Msg & 0.609 & 0.638 & 0.641 & 0.583 & 0.659 & 0.689 \\
+    DeepJIT-Msg & 0.641 & 0.609 & 0.638 & 0.583 & 0.659 & 0.689 \\
     \hline
-    DeepJIT-Code & 0.734 & 0.727 & 0.738 & 0.769 & 0.738 & 0.729 \\
+    DeepJIT-Code & 0.738 & 0.734 & 0.727 & 0.769 & 0.738 & 0.729 \\
     \hline
-    DeepJIT & \textbf{0.764} & \textbf{0.765} & \textbf{0.768} & \textbf{0.781} & \textbf{0.771} \\
+    DeepJIT & \textbf{0.768} & \textbf{0.764} & \textbf{0.765} & \textbf{0.781} & \textbf{0.771} & \textbf{0.751} \\
     \hline
     \end{tabular}%
   \label{tab:variants}%
+
 \end{table*}%
 
-\noindent \textbf{RQ3: Does the proposed model benefit from the manually extracted code changes features?}
+\noindent \textbf{RQ3: Does DeepJIT benefit from the manually extracted code changes features?}
 
 \begin{table*}[t!]
   \centering
-  \caption{Combination of DeepJIT with JIT's features}
+  \caption{Combination of DeepJIT with the code features derived from~\cite{mcintosh2018fix}}
     \begin{tabular}{|l|c|c|c|c|c|c|}
     \hline
     \multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
-\cline{2-7}          & Short-Period & Long-period & Random & Short-Period & Long-period & Random \\
+\cline{2-7}          & Random & Short-period & Long-period & Random & Short-Period & Long-period \\
     \hline
     \hline
-    DeepJIT & 0.764 & 0.765 & 0.768 & 0.781 & 0.771 & 0.751 \\
+    DeepJIT & 0.768 & 0.764 & 0.765 & 0.751 & 0.781 & 0.771  \\
     \hline
-    DeepJIT-Combined & \textbf{0.788} & \textbf{0.786} & \textbf{0.779} & \textbf{0.814} & \textbf{0.799} & \text{0.760} \\
+    DeepJIT-Combined & \textbf{0.779} & \textbf{0.788} & \textbf{0.786}  & \text{0.760} & \textbf{0.814} & \textbf{0.799} \\
     \hline
     \end{tabular}%
   \label{tab:combined}%
 \end{table*}%
 
-\noindent \textbf{RQ4: How are the time costs of the proposed model?}
+To address this question, we incorporate the code features, derived from~\cite{mcintosh2018fix}, into our proposed model. Specifically, the code features, namely $\textbf{z}_\textbf{r}$ are concatenated with the two embedding vectors  $\textbf{z}_\textbf{m}$ and $\textbf{z}_C$, representing the salient features of commit message and code change (see Section~\ref{sec:ftr_combine}), to build a new single vector $\textbf{z}$ as follows:
+\begin{equation}
+\label{eq:combined_ftr}
+\textbf{z} = \textbf{z}_\textbf{m} \oplus \textbf{z}_C \oplus \textbf{z}_\textbf{r}
+\end{equation}
+where $\oplus$ is the concatenation operator. Table~\ref{tab:combined} shows the AUC results of DeepJIT combining with the code features. The AUC scores increase by 1.43\%, 3.14\%, and 2.75\% in the project QT and increase by 1.20\%, 4.23\%, and 3.63\% in the project OPENSTACK on the three types of JIT models settings (i.e., random, short-period, long-period). Compared to the best baseline model (i.e., DBNJIT), DeepJIT constitutes improvements of 10.50\%, 10.36\%, and 11.02\% in the project QT and 9.51\%, 13.69\%, 12.22\% in the project OPENSTACK. It suggests that the manually extracted code features are important and can be used to improve the performance of JIT's models.
 
+\noindent \textbf{RQ4: How are the time costs of DeepJIT?}
+\begin{table*}[t!]
+  \centering
+  \caption{Time costs of DeepJIT}
+    \begin{tabular}{|l|c|c|c|c|c|c|}
+    \hline
+    \multicolumn{1}{|c|}{\multirow{2}[4]{*}{Dataset}} & \multicolumn{2}{c|}{Random} & \multicolumn{2}{c|}{Short-period} & \multicolumn{2}{c|}{Long-period} \\
+\cline{2-7}          & Training time & Testing time & Training time & Testing time & Training time & Testing time \\
+    \hline
+    \hline
+    QT    & 5 hours 43 mins & 36.2 mins & 17.2 mins & 3.2 mins & 1 hours 18 mins & 8.1 mins \\
+    \hline
+    OPENSTACK & 12 hours 15 mins & 1 hours 6 mins & 10.1 mins & 2.3 mins & 2 hours 37 mins & 12.4 mins \\
+    \hline
+    \end{tabular}%
+  \label{tab:cost}%
+\end{table*}%
+
+We train and test DeepJIT on NVIDIA DGX1 with Tesla P100~\cite{gawande2018scaling}. Table~\ref{tab:cost} shows the time costs of DeepJIT in three types of JIT's models (i.e., random, short-period, and long-period) on QT and OPENSTACK. \cmt{Prof. Hoa: do you have any idea how to describe the time cost?}
 
