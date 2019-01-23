@@ -4,11 +4,12 @@
 \usepackage{amsmath}
 \usepackage{multirow}
 \usepackage{hyperref}
+
 \DeclareMathAlphabet\mathbfcal{OMS}{cmsy}{b}{n}
 
 \newcommand{\cmt}[1]{\textbf{\textcolor{red}{#1}}}
 
-\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
+%\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
 \settopmatter{printacmref=false}
 \pagestyle{plain} % removes running headers
 
@@ -45,7 +46,7 @@
 % \editor{Theo D'Hondt}
 % \editor{Wolfgang De Meuter}
 
-
+\hypersetup{draft}
 \begin{document}
 \title{DeepJIT: A Deep Learning Framework for \emph{Just-In-Time} \\ Defect Prediction}
 % \titlenote{Produces the permission block, and

@@ -6,10 +6,10 @@ Some previous studies focus on change-level defect prediction (i.e., JIT defect 
 Aversano \emph{et al.}~\cite{Aversano2007} and Kim \emph{et al.}~\cite{Kim2008} use source code change logs to predict commits as being buggy or not. For example, Kim \emph{et al.}~\cite{Kim2008} used the identifiers in added and deleted source code and the words in change logs. The experimental results on the datasets collected from 12 open source software projects show that the proposed approach achieve 78 percent accuracy and a 60 percent recall.
 
 Kononenko et al.~\cite{Kononenko:2015} found that the addition of code change properties that were extracted from code review databases contributed a significant amount of explanatory power to JIT models. McIntosh and Kamei also 
-\cmt{TODO: update here} 
+%\cmt{TODO: update here} 
 %The importance of impactful families of code change properties like Size and Review are consistently under/overestimated in the studied systems.
 
-Comparing with these previous studies, we introduce the JIT defect prediction model (DeepJIT) that learn a deep representation of commits and compare the prediction performance of DeepJIT with other JIT models on the dataset including code change properties that are extracted from code review databases. We extended the datasets that McIntosh and Kamei used to analyze\footnote{\url{https://github.com/software-rebels/JITMovingTarget}} by adding commit messages and code changes. 
+Comparing with these previous studies, we introduce the JIT defect prediction model (DeepJIT) that learn a deep representation of commits and compare the prediction performance of DeepJIT with other JIT models on the dataset including code change properties that are extracted from code review databases. We extended the datasets that McIntosh and Kamei used to analyze~\footnote{\url{https://github.com/software-rebels/JITMovingTarget}} by adding commit messages and code changes. 
 
 \subsection{Deep Learning Models in Defect Prediction}
 
