@@ -26,7 +26,13 @@ The novelty of the just-in-time defect prediction model lies in the convolutiona
 
 \subsection{Convolutional Network Architecture for Commit Message}
 \label{sec:cnn_msg}
-The underlying deep neural network for commit message is a Convolutional Neural Network (CNN). CNN firstly used to automatically learn the salient features in the images from raw pixel values~\cite{krizhevsky2012imagenet}. However, CNN has been also used a lot and showed extraordinary successes in Natural Language Processing (NLP)~\cite{kim2014convolutional, dos2014deep, kalchbrenner2014convolutional, zhang2015character, johnson2014effective}. The architecture of CNN allowed it to extract the structural information features from raw text data of word embedding. Next, we describe how a simple CNN can be used to learn the commit message's features.
+\begin{figure}
+\center
+\includegraphics[scale=0.4]{figs/msg.pdf}
+\caption{A convolutional network architecture for commit message.}
+\label{fig:msg}
+\end{figure}
+The underlying deep neural network for commit message is a Convolutional Neural Network (CNN). CNN firstly used to automatically learn the salient features in the images from raw pixel values~\cite{krizhevsky2012imagenet}. However, CNN has been also used a lot and showed extraordinary successes in Natural Language Processing (NLP)~\cite{kim2014convolutional, dos2014deep, kalchbrenner2014convolutional, zhang2015character, johnson2014effective}. The architecture of CNN allowed it to extract the structural information features from raw text data of word embedding. Figure~\ref{fig:msg} presents an architecture of CNN for commit message. We briefly explain it in the following paragraphs. 
 
 Given a commit message $\textbf{m}$ which is essentially a sequence of words $[w_1, \dots, w_{|m|}]$. We aim to obtains its matrix representation $\textbf{m} \rightarrow \textbf{M} \in \mathbb{R}^{|m| \times d_m}$, where the matrix $\textbf{M}$ comprises a set of words $w_i \rightarrow W_i$, $i = 1, \dots, |m|$ in the given commit message. Each word $w_i$ now is represented by an embedding vector, i.e., $W_i \in \mathbb{R}^{d_m}$, where $d_m$ is a $d_m$-dimensional vector of a word appearing in the commit message. 
 

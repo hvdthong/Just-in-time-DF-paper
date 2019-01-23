@@ -44,7 +44,7 @@ The pooling layer, which is an important component of CNN, aims to reduce the di
 \end{itemize}
 In practice, max pooling often achieves a better performance compared to the other two pooling techniques~\cite{zeiler2013stochastic}. Figure~\ref{fig:filter} presents a visual representation of a convolutional layer and pooling layer in CNN. Given an input 5$\times$5 and a filter 3$\times$3, we output a new activation map 3$\times$3. A max pooling layer with a filter 2$\times$2 is then applied to produce a new output. 
 
-The output of pooling layer is flatten and directly passed to a fully connected layer (or a hidden layer). The fully connected layer is passed to an output layer to calculate an objective function (or a loss function)~\cite{zhao2017loss}. The objective function normally is optimized using a stochastic gradient descent~\cite{bottou2010large}. This is an analogous way with traditional neural networks~\cite{huang1988neural}.
+The output of pooling layer is flatten and directly passed to a fully connected layer (or a hidden layer). The fully connected layer is passed to an output layer to calculate an objective function (or a loss function)~\cite{zhao2017loss}. The objective function normally is optimized using a stochastic gradient descent (SGD)~\cite{bottou2010large}. This is an analogous way with traditional neural networks~\cite{huang1988neural}.
 
 
 
