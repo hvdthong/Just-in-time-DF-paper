@@ -1,0 +1,60 @@
+\section{Threats to Validity}
+\label{sec:threats}
+
+We now discuss the threats to the validity of our study.
+
+\subsection{Construct Validity}
+\label{sec:cthreats}
+
+Threats to construct validity have to do the alignment of our choice of indicators with what we set out to measure.
+We identify fix-inducing changes in our datasets using the SZZ algorithm~\cite{sliwerski2005msr}.
+The SZZ algorithm is commonly used in defect prediction research~\cite{kim2008tse, kamei2013tse, kamei2016emse, kononenko2015icsme}, yet has known limitations.
+For example, if a defect identifier is not recorded in the VCS commit message of a change, it will not be flagged as defect-fixing.
+To combat this potential bias, we select systems that use the Gerrit code reviewing tool, which tightly integrates with the VCS, allowing projects to automatically generate reliable commit messages based on fields of the approved code reviews.
+These commit messages can easily be processed.
+Hence, insofar as developers are carefully filling in code review records in Gerrit, our VCS data will be clean.
+Nonetheless, an approach to recover missing links that improves the accuracy of the SZZ algorithm~\cite{wu2011fse} may further improve the accuracy of our results.
+
+Similarly, we conduct a preliminary analysis of the rates of
+(a) fix-inducing changes and
+(b) reviewed changes in each time period to mitigate limitations of the SZZ algorithm and to prevent the turbulent initial adoption periods from impacting our reviewing measurements.
+Although the preliminary analysis is conducted to mitigate false positives in our datasets of fix-inducing changes, it may bias our results.
+
+Copied and renamed files may truncate our history and experience code change properties.
+We rely on the copied and renamed file detection algorithms that are built into the {\tt git} VCS.
+Since these algorithms are based on heuristics, they may introduce false positives or false negatives.
+To check how serious concerns of false positives are, we selected a sample of 50 files that were identified as copied/renamed from our dataset.
+In our opinion, all of these files were indeed copied/renamed, suggesting that false positives are not severely affecting our measurements.
+False negatives are more difficult to quantify.
+Nonetheless, a more accurate copy/rename detection technique may yield more accurate history and experience measurements.
+
+More broadly speaking, our code change measurements are computed using various scripts that we have written.
+These scripts may themselves contain defects, which would affect our measurements and results.
+We combat this threat by testing our tools and scripts on subsamples of our datasets, and manually verifying the results.
+
+Our results may be sensitive to the period length.
+We select period lengths of three and six months such that each period contains a sufficient amount of data to train stable defect models, while still yielding enough periods to study evolutionary trends.
+Moreover, this paper aims to study changes in the properties of fix-inducing changes over time, not to identify the ``optimal'' period length.
+
+\subsection{Internal Validity}
+\label{sec:ithreats}
+
+Threats to internal validity have to do with whether other plausible hypotheses could explain our results.
+We assume that fluctuations in the performance and impactful properties of JIT models are linked with fluctuations in the nature of fix-inducing changes.
+However, other intangible confounding factors could be at play (e.g., changes to team culture, contributor turnover).
+On the other hand, we control for six families of code change properties that cover a broad range of change characteristics.
+
+Our findings may be specific to nonlinear logistic regression models, and may not apply to other classification techniques.
+As suggested by our prior work~\cite{ghotra2015icse}, we are actively investigating other classification techniques like Random Forest.
+Preliminary results indicate that the findings of RQ1 can be reproduced in the Random Forest context.
+However, since the Wald $\chi^2$ importance scores are not well-defined for such classifiers, a common importance score needs to be identified before RQ2 and RQ3 can be replicated.
+
+\subsection{External Validity}
+
+Threats to external validity have to do with the generalizability of our results to other systems.
+We focus our study on two open source systems.
+We chose strict eligibility criteria, which limits the systems that are available for analysis (see Section~\ref{sec:studied}).
+Due to our small sample size, our results may not generalize to all software systems.
+However, the goal of this paper is not to build a grand theory that applies to all systems, but rather to show that there are some systems for which properties of fix-inducing changes are fluctuating.
+Our results suggest that these fluctuations can have a large impact on the performance of JIT models and the quality improvement plans that are derived from JIT models.
+Nonetheless, additional replication studies are needed to generalize our results.

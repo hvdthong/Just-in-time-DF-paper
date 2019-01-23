@@ -1,0 +1,50 @@
+\section{Related Work}
+\label{sec:related}
+
+In this section, we situate our work within the context of past studies on JIT modelling and its assumptions.
+
+\subsection{JIT Defect Modelling}
+
+Recent work has shown that JIT models have become sufficiently robust to be applied in practice.
+Indeed, JIT models are included in the development processes of large software systems at Avaya~\cite{mockus2000bell}, Blackberry~\cite{shihab2012fse}, and Cisco~\cite{tan2015seip}.
+
+To achieve such robustness, a variety of code change properties need to be used to predict fix-inducing changes.
+For example, Mockus and Weiss~\cite{mockus2000bell} predicted fix-inducing changes using a set of code change properties that are primarily derived from the changes themselves.
+Kim \ea~\cite{kim2008tse} and Kamei \ea~\cite{kamei2013tse} built upon the set of code change properties, reporting that the addition of a variety of properties that were extracted from the Version Control System (VCS) and the Issue Tracking System (ITS) helped to improve the prediction accuracy.
+Kononenko \ea~\cite{kononenko2015icsme} also found that the addition of code change properties that were extracted from code review databases contributed a significant amount of explanatory power to JIT models.
+
+We derive the majority of our set of studied code change properties from those described in these prior studies.
+However, while these previous studies empirically evaluate the prediction performance of JIT models, they do not focus on the consistency of the properties of fix-inducing changes, which is the central thrust of this paper.
+
+\subsection{Assumptions of Defect Modelling}
+\label{sec:related_bias}
+
+\input{tables/cases.tex}
+
+Past work has shown that if care is not taken when collecting data from software repositories, noise may impact defect models.
+Aranda and Venolia~\cite{aranda2009icse} found that VCSs and ITSs are noisy sources of data.
+For example, Antoniol \ea~\cite{antoniol2008cascon} found that issue reports are often mislabelled, i.e., reports that describe defects are labelled as enhancements, and vice versa.
+Herzig \ea~\cite{herzig2013icse} found that this issue report mislabelling can impact the ranking of modules that is produced by defect models.
+Furthermore, Bird \ea~\cite{bird2009fse} found that characteristics of issue reports (e.g., severity) and issue reporters (e.g., experience) can influence the likelihood of linking related ITS and VCS records when it is necessary.
+Without these links, datasets that are constructed for defect prediction purposes may erroneously label defective modules as clean, or vice versa.
+To study the impact that missing links may have on defect prediction, Kim \ea~\cite{kim2011icse} sever existing links to simulate a variety of rates of missing links.
+
+On the other hand, recent work also shows that noise and bias may not be a severe impediment to defect modelling.
+For example, our prior work~\cite{tantithamthavorn2015icse} showed that issue report mislabelling rarely impacts the precision of defect models or the interpretation of the top-ranked variables.
+Nguyen \ea~\cite{nguyen2010wcre} found that biases exist even in a ``near-ideal'' development setting, where links are automatically recorded, suggesting that linkage bias is a symptom of any development process.
+Moreover, Rahman \ea~\cite{rahman2013fse} found that the total number of modules has a larger impact on defect model performance than noise or biases do.
+
+Even with data that is completely free of noise and bias, there are assumptions that must be satisfied in order to fit defect models.
+Turhan~\cite{turhan2012emse} argued that ``dataset shifts'' (i.e., dataset characteristics that violate modelling assumptions~\cite{menzies2013tse}) may influence predictive models in software engineering.
+In a similar vein, we study whether properties of fix-inducing changes are consistent enough to satisfy the assumption that past events are similar to future events.
+
+Past studies also use historical data to improve the performance of defect prediction models~\cite{kim2007icse, nam2013icse,zimmermann2008evolution}.
+For example, Nam \ea~\cite{nam2013icse} mitigated dataset shifts by applying a transfer learning approach, which makes feature distributions in training and testing datasets more similar.
+Zimmermann \ea~\cite{zimmermann2008evolution} showed how complexity, problem domain, and change rate can be used to predict defects in Microsoft and Eclipse systems.
+While these studies predict which modules are at-risk of containing defects, our study focuses on understanding the impact that various code change properties have on the risk that changes pose for inducing future fixes in a longitudinal setting.
+
+Perhaps the most similar prior work is that of Ekanayake \ea~\cite{ekanayake2009msr}, who studied the stability of module-level defect prediction models.
+They used trends in the predictive power of defect prediction models to identify periods of ``concept drift,'' i.e., periods where historical trends do not aid in identifying defect-prone modules. 
+Our work differs from that of Ekanayake \ea~in two ways.
+First, we study JIT models, which are concerned with fix-inducing changes rather than defective modules.
+Second, while past work focuses on model performance, we study the impact that fluctuations in the importance of properties of fix-inducing changes have on both the performance (RQ1) and the interpretation (RQ2, RQ3) of JIT models.

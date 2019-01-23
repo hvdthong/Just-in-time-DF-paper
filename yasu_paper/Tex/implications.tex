@@ -1,0 +1,23 @@
+\section{Practical Suggestions}
+\label{sec:practice}
+
+Based on our findings, we make the following suggestions for practitioners:
+
+\begin{enumerate}[{\bf (1)}]
+  \item {\bf JIT models should be retrained to include data from at most three months prior to the testing period.}
+    Our findings from RQ1 suggest that JIT models lose a large amount of predictive power one year after they are trained using the datasets that are collected from early periods.
+    To avoid producing misleading predictions, JIT models should be retrained using more recent data often, at least more than once per year.
+
+ 
+
+  \item {\bf Long-term JIT models should be trained using a cache of plenty of changes.}
+    Complementing recent work on module-level defect predictors~\cite{rahman2013fse}, our findings from RQ1 indicate that larger amounts of data (i.e., our long-period models) can dampen performance decay in JIT models.
+    Indeed, JIT models that are trained using more changes tend to retain their predictive power for a longer time than JIT models that are trained only using the changes that were recorded during most recent three-month period.
+
+  \item {\bf Quality improvement plans should be revisited periodically using feedback from recent data.}
+    Our findings from RQ2 suggest that the importance of code change properties fluctuates over time.
+    Moreover, our findings from RQ3 suggest that these fluctuations can lead to misalignments of quality improvement plans.
+    Since RQ3 shows that long-period models achieve better stability, they should be preferred when making short-term quality plans.
+    For long-term plans, we note that families for whom their importance scores were underestimated (overestimated) in the past tend to also be underestimated (overestimated) in the future.
+    Hence, quality improvement plans should be periodically reformulated using the stability of the importance scores in the past to amplify or dampen raw importance scores.
+\end{enumerate}

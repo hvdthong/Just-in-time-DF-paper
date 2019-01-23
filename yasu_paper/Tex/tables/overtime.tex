@@ -1,0 +1,149 @@
+\begin{comment}
+\begin{table*}[t]
+\centering
+\caption{The performance of our models that identify risky changes.}
+\label{tab:overtime}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{cc|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+\hline
+\multicolumn{2}{c|}{Strata} & \multicolumn{2}{c|}{1} & \multicolumn{2}{c|}{2} & \multicolumn{2}{c|}{3} & \multicolumn{2}{c|}{4} & \multicolumn{2}{c|}{5} & \multicolumn{2}{c|}{6} & \multicolumn{2}{c|}{7} & \multicolumn{2}{c|}{8} & \multicolumn{2}{c|}{9} & \multicolumn{2}{c|}{10} & \multicolumn{2}{c}{11} \\
+\cline{3-24}
+\multicolumn{2}{c|}{Model type} & Log. & EA & Log. & EA & Log. & EA & Log. & EA & Log. & EA & Log. & EA & Log. & EA & Log. & EA & Log. & EA & Log. & EA & Log. & EA\\
+\hline
+\hline
+\multicolumn{2}{c|}{{\sc AUCEC}$_{\textit{expl.}}$}
+& 0.34 & 0.50 & 0.25 & 0.44 & 0.26 & 0.40 & 0.33 & 0.48 & 0.30 & 0.43 & 0.48 & 0.49 & 0.39 & 0.53 & 0.52 & 0.53 & 0.22 & 0.38 & 0.24 & 0.51 & 0.23 & 0.44 \\
+\multicolumn{2}{c|}{{\sc AUCEC}$_{\textit{pred.}}$}
+& 0.28 & 0.37 & 0.26 & 0.38 & 0.31 & 0.42 & 0.34 & 0.44 & 0.27 & 0.44 & 0.41 & 0.47 & 0.40 & 0.49 & 0.28 & 0.35 & 0.21 & 0.53 & 0.23 & 0.47 & - & - \\
+\hline
+\hline
+\multirow{5}{*}{\rotatebox{90}{Diffusion}}
+& \# Subsystems & -1\% & 0\% & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & 2\% & 3\% & 0\% & 2\% & 0\% & -3\% & 5\% & 1\% & 1\% & 0\% & -1\% & 1\% & 1\% & 1\% & 8\% & 2\% \\
+& \# Subsystems & -1\% & 1\% & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & 2\% & 3\% & 0\% & 19\% & 2\% & -1\% & -4\% & -2\% & 0\% & 1\% & -1\% & 1\% & 7\% & 3\%\\
+& \# Components & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & 0\% & 0\% & 0\% & 0\% & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & 3\% & 0\% \\
+& \# Components & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & -1\% & 0\% & 2\% & 4\% & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$\\
+& \# Files & 0\% & 13\% & -12\% & 10\% & -16\% & 13\% & -18\% & 10\% & -8\% & 6\% & -8\% & 10\% & -8\% & 7\% & -6\% & 8\% & -14\% & 1\% & -28\% & 16\% & -14\% & 6\% \\
+& \# Files & 8\% & 4\% & -9\% & 15\% & -22\% & 20\% & -11\% & 14\% & -19\% & 22\% & -13\% & 8\% & -6\% & 4\% & -4\% & 5\% & -36\% & 11\% & -20\% & 14\%\\
+& \# Entropy & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+& \# Entropy & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\cline{3-24}
+& Total & -4\% & 16\% & -12\% & 10\% & -16\% & 13\% & -19\% & 18\% & -12\% & 11\% & -8\% & 19\% & -14\% & 18\% & -6\% & 9\% & -17\% & 4\% & -28\% & 23\% & -2\% & 17\%\\
+& Total & 3\% & 10\% & -9\% & 15\% & -22\% & 20\% & -14\% & 25\% & -52\% & 61\% & -12\% & 12\% & -22\% & 24\% & -5\% & 10\% & -42\% & 15\% & -20\% & 26\%\\
+\hline
+Purpose
+& Bug fixing? & 0\% & 0\% & 0\% & 1\% & 1\% & 0\% & 6\% & 3\% & 3\% & 1\% & 3\% & 5\% & 9\% & 3\% & 1\% & 2\% & 15\% & 6\% & 2\% & -1\% & 0\% & 0\% \\
+& Bug fixing? & 1\% & 0\% & 0\% & 1\% & 3\% & 1\% & 5\% & 0\% & 13\% & 2\% & 5\% & 4\% & 9\% & 10\% & 8\% & 3\% & 15\% & 1\% & 0\% & 0\%\\
+\hline
+\multirow{4}{*}{\rotatebox{90}{History}}
+& \# Developers & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & 6\% & -1\% & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+& \# Developers & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & 7\% & 10\% & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$
+& \# Changes & 25\% & 6\% & 2\% & 1\% & 10\% & 5\% & 24\% & 25\% & 10\% & 0\% & 1\% & -3\% & 10\% & 7\% & 6\% & 2\% & 1\% & 2\% & 6\% & 6\% & 3\% & 2\% \\
+& \# Changes & 4\% & -14\% & 2\% & -2\% & 12\% & 11\% & 16\% & 18\% & 27\% & 19\% & -5\% & 3\% & 0\% & -8\% & 7\% & -3\% & 5\% & 2\% & 7\% & 6\% \\
+& Age & 0\% & 0\% & 2\% & 1\% & 2\% & 1\% & 0\% & 2\% & 2\% & 4\% & 0\% & 0\% & 1\% & 0\% & 0\% & 0\% & 1\% & 0\% & 2\% & 0\% & 14\% & 1\%\\
+\cline{3-24}
+& Total & 25\% & 6\% & 5\% & 3\% & 16\% & 7\% & 27\% & 22\% & 19\% & 11\% & 15\% & 26\% & 13\% & 8\% & 8\% & 3\% & 2\% & 2\% & 12\% & 8\% & 22\% & 5\%\\
+\hline
+\multirow{5}{*}{\rotatebox{90}{Author}}
+& \# Prior changes & 2\% & 0\% & 7\% & 3\% & 1\% & 0\% & 0\% & 0\% & -1\% & 1\% & 0\% & -1\% & 0\% & -1\% & 1\% & 6\% & -1\% & 1\% & 0\% & -2\% & 2\% & 1\% \\
+& \# Recent changes & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$& $\dagger$ & $\dagger$& $\dagger$ & $\dagger$ \\
+& \# Subsystem changes & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$& $\dagger$ & $\dagger$& $\dagger$ & $\dagger$ \\
+& Awareness & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$& $\dagger$ & $\dagger$& $\dagger$ & $\dagger$ \\
+\cline{3-24}
+& Total & 2\% & 0\% & 7\% & 3\% & 1\% & 0\% & 0\% & 0\% & -1\% & 1\% & 0\% & -1\% & 0\% & -1\% & 1\% & 6\% & -1\% & 1\% & 0\% & -2\% & 2\% & 1\% \\
+\hline
+\multirow{5}{*}{\rotatebox{90}{Reviewer}}
+& \# Prior changes & 0\% & -1\% & 0\% & -1\% & 0\% & 0\% & 0\% & -1\% & 0\% & 0\% & 0\% & -1\% & 0\% & -1\% & 0\% & 0\% & 1\% & 4\% & 3\% & 1\% & 1\% & -1\%\\
+& \# Recent changes & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$& $\dagger$ & $\dagger$& $\dagger$ & $\dagger$ \\
+& \# Subsystem changes & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$& $\dagger$ & $\dagger$& $\dagger$ & $\dagger$ \\
+& Awareness & 0\% & -1\% & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & -1\% & -5\% & 3\% & 1\% & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\cline{3-24}
+& Total & 0\% & -2\% & 0\% & -1\% & 0\% & 0\% & 0\% & -1\% & 0\% & 0\% & 1\% & -4\% & 4\% & 0\% & 0\% & 0\% & 1\% & 4\% & 3\% & 1\% & 1\% & -1\% \\
+\hline
+\multirow{6}{*}{\rotatebox{90}{Review}}
+& \# Revisions & 0\% & 0\% & 0\% & -1\% & -5\% & -1\% & 3\% & -2\% & 5\% & -1\% & 1\% & -3\% & 3\% & 0\% & 0\% & -6\% & 6\% & -1\% & 19\% & 0\% & -6\% & -1\% \\
+& Review window & -1\% & 0\% & 0\% & 0\% & 0\% & 0\% & 0\% & -1\% & 1\% & 2\% & 0\% & -2\% & 1\% & 1\% & 0\% & -2\% & 2\% & 2\% & 0\% & 0\% & 1\% & 0\% \\
+& \# Comments & 3\% & -1\% & 1\% & 0\% & 1\% & 1\% & 0\% & -3\% & 0\% & 0\% & 0\% & -1\% & 5\% & -1\% & 0\% & -2\% & 0\% & 0\% & 0\% & 0\% & 4\% & 1\% \\
+& \# Reviewers & 0\% & 0\% & 1\% & 0\% & 0\% & 1\% & 1\% & -5\% & 2\% & 0\% & 0\% & -2\% & 2\% & 1\% & 9\% & 5\% & 0\% & -1\% & 3\% & 0\% & -1\% & -1\% \\
+& Self-approval? & 1\% & 0\% & 11\% & 2\% & 5\% & -1\% & 0\% & 1\% & 0\% & 0\% & 0\% & 0\% & 3\% & 0\% & 0\% & 0\% & 1\% & -2\% & 0\% & -4\% & 0\% & -2\% \\
+\cline{3-24}
+& Total & -2\% & 1\% & 14\% & 4\% & -5\% & 0\% & 2\% & -7\% & 6\% & 1\% & 2\% & -10\% & 12\% & 1\% & 16\% & -6\% & 10\% & -3\% & 21\% & -1\% & -7\% & -5\% \\
+\hline
+\hline
+\multicolumn{24}{p{0.9\textwidth}}{Discarded during:}\\
+\multicolumn{24}{p{0.9\textwidth}}{\hspace{1cm}$\dagger$ Variable clustering analysis ($|\rho| \ge 0.7$)}\\
+\multicolumn{24}{p{0.9\textwidth}}{\hspace{1cm}$\ddagger$ Redundant variable analysis (R$^2 \ge 0.9$)}\\
+\multicolumn{24}{p{0.9\textwidth}}{Statistical significance of explanatory power according to Wald $\chi^2$ likelihood ratio test:}\\
+\multicolumn{24}{p{0.9\textwidth}}{\hspace{1cm}$\circ$~$p \ge 0.05$; \one~$p < 0.05$; \two~$p < 0.01$; \three~$p < 0.001$}\\
+\multicolumn{24}{p{0.9\textwidth}}{- Nonlinear degrees of freedom not allocated}\\
+\end{tabular}
+}
+\end{table*}
+
+\multirow{2}{*}{\rotatebox{90}{Size}}
+& Lines added & 25\%\three & 23\%\three & 38\%\three & 24\%\three & 30\%\three & 58\%\three & 86\%\three & 23\%\three & 59\%\three & 73\%\three & 38\%\three \\
+\cline{3-13}
+& Lines deleted & 5\%\two & $\ddagger$ & $<$1\%$^\circ$ & 2\%\one & $\ddagger$ & 1\%$^\circ$ & $\ddagger$ & 1\%$^\circ$ & $\ddagger$ & $\ddagger$ & 3\%$^\circ$ \\
+\hline
+\multirow{4}{*}{\rotatebox{90}{Diffusion}}
+& \# Subsystems & 8\%\three & 5\%\three & $<$1\%$^\circ$ & $<$1\%$^\circ$ & $<$1\%$^\circ$ & 11\%\three & 9\%\three & $<$1\%$^\circ$ & 2\%$^\circ$ & $<$1\%$^\circ$ & $<$1\%$^\circ$ \\
+\cline{3-13}
+& \# Components & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\ddagger$ & 1\%$^\circ$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\cline{3-13}
+& \# Files & $<$1\%$^\circ$ & 2\%\one & 9\%\three & 2\%\one & 7\%\three & $\ddagger$ & $<$1\%$^\circ$ & 3\%\one & 3\%\one & $\ddagger$ & 5\%\one \\
+\cline{3-13}
+& Entropy & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\hline
+Purpose
+& Bug fixing? & 6\%\two & 1\%\one & 5\%\three & 2\%\one & 2\%\one & 3\%\one & 2\%\one & 6\%\three & 1\%$^\circ$ & 1\%$^\circ$ & 4\%$^\circ$ \\
+\hline
+\multirow{3}{*}{\rotatebox{90}{History}}
+& \# Developers & 31\%\three & 37\%\three & 10\%\three & 3\%\two & 6\%\three & 22\%\three & 13\%\three & 25\%\three & 3\%\one & 2\%\one & $<$1\%$^\circ$ \\
+\cline{3-13}
+& Age & $<$1\%$^\circ$ & 2\%\one & $<$1\%$^\circ$ & 2\%\one & 2\%\one & 1\%$^\circ$ & $<$1\%$^\circ$ & 2\%\one & 8\%\three &4\%\two & 9\%\two \\
+\cline{3-13}
+& \# Changes & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\ddagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\hline
+\multirow{4}{*}{\rotatebox{90}{Review}}
+& \# Revisions & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\cline{3-13}
+& Time & $<$1\%$^\circ$ & $<$1\%$^\circ$ & $<$1\%$^\circ$ & 1\%\one & $<$1\%$^\circ$ & $<$1\%$^\circ$ & $<$1\%$^\circ$ & $<$1\%$^\circ$ & $<$1\%$^\circ$ & $<$1\%$^\circ$ & $<$1\%$^\circ$ \\
+\cline{3-13}
+& \# Comments & 1\%$^\circ$ & $<$1\%$^\circ$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\cline{3-13}
+& \# Reviewers & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\hline
+\multirow{4}{*}{\rotatebox{90}{Author}}
+& Prior changes & $\dagger$ & 2\%\one & $<$1\%$^\circ$ & $<$1\%$^\circ$ & $<$1\%$^\circ$ & $<$1\%$^\circ$ & $<$1\%$^\circ$ & 2\%\one & $<$1\%$^\circ$ & 5\%\three & $<$1\%$^\circ$ \\
+\cline{3-13}
+& Recent changes & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\cline{3-13}
+& Subsystem changes & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $<$1\%$^\circ$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\cline{3-13}
+& Awareness & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\hline
+\multirow{4}{*}{\rotatebox{90}{Reviewer}}
+& Prior changes & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\cline{3-13}
+& Recent changes & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\cline{3-13}
+& Subsystem changes & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\cline{3-13}
+& Awareness & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\hline
+\multirow{4}{*}{\rotatebox{90}{Overall}}
+& Prior changes & $<$1\%$^\circ$ & $<$1\%$^\circ$ & 1\%\one & $<$1\%$^\circ$ & $<$1\%$^\circ$ & 6\%\three & 8\%\three & 7\%\three & 1\%$^\circ$ & 4\%\two & $<$1\%$^\circ$ \\
+\cline{3-13}
+& Recent changes & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\cline{3-13}
+& Subsystem changes & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & 5\%\three & 7\%\three & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\cline{3-13}
+& Awareness & 3\%\one & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ & $\dagger$ \\
+\hline
+\hline
+\multicolumn{13}{p{0.9\textwidth}}{Discarded during:}\\
+\multicolumn{13}{p{0.9\textwidth}}{\hspace{1cm}$\dagger$ Variable clustering analysis ($|\rho| \ge 0.7$)}\\
+\multicolumn{13}{p{0.9\textwidth}}{\hspace{1cm}$\ddagger$ Redundant variable analysis (R$^2 \ge 0.9$)}\\
+\multicolumn{13}{p{0.9\textwidth}}{Statistical significance of explanatory power according to Wald $\chi^2$ likelihood ratio test:}\\
+\multicolumn{13}{p{0.9\textwidth}}{\hspace{1cm}$\circ$~$p \ge 0.05$; \one~$p < 0.05$; \two~$p < 0.01$; \three~$p < 0.001$}\\
+\multicolumn{13}{p{0.9\textwidth}}{- Nonlinear degrees of freedom not allocated}\\
+\end{comment}

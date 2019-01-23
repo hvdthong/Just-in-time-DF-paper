@@ -1,0 +1,54 @@
+\section{Conclusions \& Future Work}
+\label{sec:conclusions}
+
+JIT models are trained to identify fix-inducing changes.
+However, like any method that is based on historical data, JIT models assume that future fix-inducing changes are similar to past fix-inducing changes.
+In this paper, we investigate whether or not fix-inducing changes are a moving target, addressing this following central question:
+
+\conjecture
+
+Through a longitudinal case study of the {\sc Qt} and {\sc OpenStack} systems, we find that the answer is no:
+
+\begin{itemize}
+  \item JIT models lose a large proportion of their discriminatory power and calibration scores one year after being trained.
+  \item The magnitude of the importance scores of the six studied families of code change properties fluctuate as systems evolve.
+  \item These fluctuations can lead to consistent overestimates (and underestimates) of the future impact of the studied families of code change properties.
+\end{itemize}
+
+\subsection{Future Work}
+
+Below, we outline several avenues for future work that we believe are ripe for exploration.
+
+\begin{itemize}
+  \item {\bf Measuring (and improving) the costs of retraining JIT models.}
+    A continuous refitting solution, where JIT models are refit after each new change appears, may be the optimal choice from a performance standpoint.
+    However, the costs of refitting JIT model must be quantified in order to check whether this continuous solution is truly the best option.
+    These refitting costs are difficult to quantify, since they vary based on the model construction and analysis steps that need to be performed.
+    For example, the approach that we adopt in this paper is semi-automatic.
+    There are some manual steps in our correlation analysis (see Step MC-1 in Section~\ref{sec:mc}) and model fitting process (see Step MC-2 in Section~\ref{sec:mc}).
+    These steps would be infeasible to repeat if one must refit models for every change.
+    Future work may explore other modelling techniques where these steps could be automated (or omitted if collinearity and linearity assumptions are not of concern).
+    In such a setting, continuous retraining may be a viable solution.
+
+  \item {\bf Analyzing other stratification approaches.}
+  In this study, we stratify our data into time periods using three- and six-month period lengths.
+  Other period lengths could be explored in future work.
+  Furthermore, although time periods are intuitive for splitting data, there are other stratification approaches that could be used (e.g., a consistent number of changes, project releases).
+
+  \item {\bf Revisiting construct and internal validity concerns.}
+    For example, the recovery of missing links between the individual repositories or a better technique for detecting copied or renamed entities may produce more accurate results.
+
+  \item {\bf Replication using systems that are developed in other contexts.}
+    Historical data from other systems may provide other insights into the evolving nature of fix-inducing changes.
+    For example, while we focused on two open source organizations in this paper, a natural avenue for future work would be to explore whether the same patterns emerge in proprietary software development organizations.
+\end{itemize}
+
+\subsubsection*{Replication}
+
+To facilitate future work, we have made the data that we collected and the scripts that we used to analyze them available online.\footnote{\url{https://github.com/software-rebels/JITMovingTarget}}
+
+\appendices
+
+\section*{Acknowledgments}
+
+This research was partially supported by the Natural Sciences and Engineering Research Council of Canada (NSERC) and JSPS KAKENHI Grant Numbers 15H05306.

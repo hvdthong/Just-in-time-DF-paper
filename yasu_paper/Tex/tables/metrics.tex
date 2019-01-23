@@ -1,0 +1,52 @@
+\begin{table*}[ht!]
+\centering
+\caption{A taxonomy of the studied families of code and review properties.}
+\label{tab:metrics}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{c|p{2cm}|p{5.7cm}|p{8.4cm}}
+\hline
+& {\bf Property} & {\bf Description} & {\bf Rationale} \\
+\hline
+\multirow{2}{*}{\rotatebox{90}{Size}}
+& Lines added & The number of lines added by a change. &  The more code that is changed, the more likely that defects \\
+\cline{2-3}
+& Lines deleted & The number of lines deleted by a change. & will be introduced~\cite{nagappan2006icse}.\\
+\hline
+\multirow{4}{*}{\rotatebox{90}{Diffusion}}
+& Subsystems & The number of modified subsystems. & Scattered changes are riskier than focused ones because they \\
+\cline{2-3}
+& Directories & The number of modified directories. & require a broader spectrum of expertise~\cite{d2010extensive, hassan2009icse}.\\
+\cline{2-3}
+& Files & The number of modified files. &  \\
+\cline{2-3}
+& Entropy & The spread of modified lines across file. &  \\
+\hline
+\multirow{6}{*}{\rotatebox{90}{History}}
+& Unique changes & The number of prior changes to the modified files. & More changes are likely more risky because developers will have to recall and track many previous changes~\cite{kamei2013tse}.\\
+\cline{2-4}
+& Developers & The number of developers who have changed the modified files in the past. & Files previously touched by more developers are likely more risky~\cite{matsumoto2010promise}. \\
+\cline{2-4}
+& Age & The time interval between the last and current changes. & More recently changed code is riskier than older code~\cite{graves2000tse}. \\
+\hline
+\multirow{11}{*}{\rotatebox{90}{Author/Rev. Experience}}
+& Prior changes & The number of prior changes that an actor\smallnum{1} has participated in.\smallnum{2} & Changes that are produced by novices are likely to be more risky than changes produced by experienced developers~\cite{mockus2000bell}. \\
+\cline{2-3}
+& Recent changes & The number of prior changes that an actor has participated in weighted by the age of the changes (older changes are given less weight than recent ones). & \\
+\cline{2-3}
+& Subsystem changes & The number of prior changes to the modified subsystem(s) that an actor has participated in. & \\
+\cline{2-4}
+& Awareness\smallnum{3} & The proportion of the prior changes to the modified subsystem(s) that an actor has participated in. & Changes that involve developers who are aware of the prior changes in the impacted subsystems are likely to be less risky than those that do not. \\
+\hline
+\multirow{12}{*}{\rotatebox{90}{Review}}
+& Iterations & Number of times that a change was revised prior to integration. & The quality of a change likely improves with each iteration. Hence, changes that undergo plenty of iterations prior to integration may be less risky than those that undergo few~\cite{porter1998tosem, thongtanunam2015msr}.\\
+\cline{2-4}
+& Reviewers & Number of reviewers who have voted on whether a change should be integrated or abandoned. & Since more reviewers will likely raise more issues so that they may be addressed prior to integration, changes with many reviewers are likely to be less risky than those with fewer reviewers~\cite{raymond}. \\
+\cline{2-4}
+& Comments & The number of non-automated, non-owner comments posted during the review of a change. & Changes with short discussions may not be deriving value from the review process, and hence may be more risky~\cite{mcintosh2014msr, mcintosh2016emse}.\\
+\cline{2-4}
+& Review window & The length of time between the creation of a review request and its final approval for integration. & Changes with shorter review windows may not have spent enough time carefully analyzing the implications of a change prior to integration, and hence may be more risky~\cite{porter1998tosem, thongtanunam2015msr}.\\
+\hline
+\multicolumn{4}{l}{\smallnum{1} Either the author or reviewer of a change. \smallnum{2} Either authored or reviewed. \smallnum{3} New property proposed in this paper.}
+\end{tabular}
+}
+\end{table*}

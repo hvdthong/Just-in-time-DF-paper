@@ -1,0 +1,47 @@
+\begin{table}
+\centering
+\caption{The number of fix-inducing changes that survive each step of our filtering process.}
+\label{tab:filterings}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{l|p{2.5cm}|rrr|rrr}
+\hline
+\# & Filter & \multicolumn{3}{c|}{\sc Qt} & \multicolumn{3}{c}{\sc OpenStack} \\
+   & & Total & \% & $\Delta$ & Total & \% & $\Delta$ \\
+\hline
+$F_0$ & No filters & 5,495 & 17\% & - & 4,423 & 16\% & - \\
+$F_1$ & Code comments & 5,407 & 17\% & 88 & 4,291 & 16\% & 132 \\ 
+$F_2$ & Whitespace changes  & 5,133 & 16\% & 274 & 3,814 & 14\% & 477 \\
+$F_3$ & Issue report date   & 4,158 & 13\% & 975 & 3,480 & 13\% & 334 \\
+$F_4$ & Issue report type & 3,242 & 10\% & 916 & 3,480 & 13\% & 0 \\
+$F_{5a}$ & Too much churn & 3,190 & 10\% & 52 & 3,474 & 13\% & 6 \\
+$F_{5b}$ & Too many files & 3,162 & 10\% & 28 & 3,461 & 13\% & 13 \\
+$F_{5c}$ & No lines added & 3,153 & 11\% & 9 & 3,450 & 14\% & 11 \\
+$F_6$ & Period & 2,891 & 11\% & 262 & 2,788 & 23\% & 662 \\
+$F_7$ & Suspicious fixes & 2,172 & 9\% & 719 & 1,830 & 15\% & 958 \\
+$F_8$ & Suspicious inducing changes & 2,002 & 8\% & 170 & 1,616 & 13\% & 214 \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+%F_4
+%[metrics_qt5]$ awk -F, '{print $2}' all.metrics.csv.csv | sort -u | wc -l
+%   31932
+% awk -F, '{print $2}' qt.metrics.csv | sort -u | wc -l
+%     225 -2 => 32,155
+%[metrics_openstack]$ awk -F, '{print $2}' all.metrics.csv.csv | sort -u | wc -l
+%   25268
+% awk -F, '{print $2}' openstack.metrics.csv | sort -u | wc -l
+%    1589 -2 => 26,855
+
+\begin{comment}
+# Here is the good example of white space filtering works:
+-    def update_health_monitor(self, context,
+-                              old_health_monitor,
+-                              health_monitor,
+-                              pool_id):
++    def update_pool_health_monitor(self, context,
++                                   old_health_monitor,
++                                   health_monitor,
++                                   pool_id):
+\end{comment}

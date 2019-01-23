@@ -1,0 +1,52 @@
+\documentclass[10pt, journal, compsoc]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{fmtcount}
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage[caption=false]{subfig}
+\usepackage{hyperref}
+\usepackage{flushend}
+\usepackage{arydshln}
+\usepackage{amsmath}
+\usepackage{cases}
+\usepackage[nocompress]{cite}
+\usepackage[numbers, sort]{natbib}
+
+% For backreferencing footnotes with \cref{label}
+\usepackage{cleveref}[2012/02/15]
+\crefformat{footnote}{#2\footnotemark[#1]#3}
+
+%For todo notes
+\usepackage{color}
+\newcommand{\todo}[1]{\colorbox{yellow}{\textbf{[#1]}}}
+\newcommand{\revised}[1]{{\color{red}#1}}
+
+% Reduce bibliography font size
+\def\bibfont{\footnotesize}
+
+% Reduce space between references
+%setlength{\bibsep}{2.5pt}
+
+% Set bibliography title
+%\renewcommand\refname{REFERENCES}
+%\renewcommand\bibsection{\section{\refname}}
+
+\newcommand{\ea}{{\em et al.}}
+\newcommand{\conclusionbox}[1]{%
+	\vspace{1mm}
+  \noindent
+	\framebox[0.48\textwidth][c]{%
+		\parbox[b]{0.45\textwidth}{%
+			{\em #1}
+		}
+	}
+}
+
+\newcommand{\smallsection}[1]{\subsubsection*{#1}}
+\newcommand{\one}{{\tiny $^{*}$}}
+\newcommand{\two}{{\tiny $^{**}$}}
+\newcommand{\three}{{\tiny $^{***}$}}
+\newcommand{\smallnum}[1]{$^{\tiny {\textbf #1}}$}

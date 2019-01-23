@@ -1,0 +1,75 @@
+\IEEEraisesectionheading{\section{Introduction}}
+\label{sec:intro}
+
+\IEEEPARstart{T}{he} limited Software Quality Assurance (SQA) resources of software organizations must focus on software modules that are likely to be defective in the future.
+To that end, {\em defect prediction models} are trained using historical data to identify defect-prone software modules (e.g., methods~\cite{giger2012esem, hata2012icse}, files~\cite{zimmerman2007}, or subsystems~\cite{nagappan2005icse}).
+After being trained using data from historical releases, defect prediction models can be used to prioritize SQA effort according the predicted defect proneness of the modules of a future release.
+
+Change-level defect prediction~\cite{mockus2000bell}, a.k.a., Just-In-Time (JIT) defect prediction~\cite{kamei2013tse}, is an alternative to module-level defect prediction, which has several advantages~\cite{shihab2012fse}.
+First, since changes often smaller than modules, JIT predictions are made at a finer granularity, which localizes the inspection process.
+Second, while modules have a group of authors, changes have only one, which makes triaging JIT predictions easier (i.e., predictions can be assigned to the author of the change).
+Finally, unlike module-level prediction, JIT models can scan changes as they are being produced, which means that problems can be inspected while design decisions are still fresh in the developers' minds.
+
+Despite the advantages of JIT defect prediction, like all prediction models, they assume that the properties of past events (i.e., fix-inducing changes) are similar to the properties of future ones.
+Yet, the consistency of properties of fix-inducing changes remains largely unexplored.
+It may indeed be the case that the properties of fix-inducing changes in one development period are entirely different from the fix-inducing changes of another.
+For example, since complexity tends to accrue as systems age~\cite{belady1976}, expertise may grow more important as systems age.
+To that end, in this paper, we set out to address the following central question:
+
+\conjecture
+
+To address our central question, we train JIT models to identify fix-inducing changes using six families of code change properties, which are primarily derived from prior studies~\cite{mockus2000bell, kim2008tse, kamei2013tse, kononenko2015icsme}).
+These properties measure:
+(a) the magnitude of the change ({\em Size});
+(b) the dispersion of the changes across modules ({\em Diffusion});
+(c) the defect proneness of prior changes to the modified modules ({\em History});
+(d) the experience of the author ({\em Author Experience}) and
+(e) code reviewer(s) ({\em Reviewer Experience});
+and (f) the degree of participation in the code review of the change ({\em Review}).
+Through a longitudinal case study of the {\sc Qt} and {\sc OpenStack} projects, we address the following research questions:
+
+\begin{enumerate}[{\bf (RQ1)}]
+\item {\bf \rqi}\\
+  \underline{Motivation:}
+    If properties of fix-inducing changes do change, JIT models that were trained to identify fix-inducing changes of the past would quickly lose their predictive power.
+Hence, we are first interested in (a) whether JIT models lose predictive power over time, and (b) how quickly such losses would occur.
+
+  \underline{Results:}
+  After one year, our JIT models typically lose 11--22 and 14--34 percentage points of their discriminatory power (AUC) in the {\sc Qt} and {\sc OpenStack} systems, respectively.
+  Similarly, after one year, our JIT models lose up to 11 and 19 percentage points from their calibration (Brier) scores in the {\sc Qt} and {\sc OpenStack} systems, respectively.
+  \newpage
+\item {\bf \rqii}\\
+  \underline{Motivation:}
+ Another symptom of changing properties of fix-inducing changes would be fluctuations in the impact that code change properties have on the explanatory power of JIT models.
+ If properties of fix-inducing changes do indeed change, the prediction modelling assumption that properties of prior and future events are similar may not be satisfied.
+  To cope with this, teams may need to refit their models.
+  To better understand how volatile the properties of fix-inducing changes are, we set out to study trends in the importance scores of code change properties in our JIT models over time. 
+
+  \underline{Results:}
+  The {\em Size} family of code change properties is a consistent contributor of large importance scores.
+  However, the magnitude of these importance scores fluctuates considerably, ranging between 10\%--43\% and 3\%--37\% of the period-specific explanatory power of our {\sc Qt} and {\sc OpenStack} JIT models, respectively.
+\item {\bf \rqiii}\\
+  \underline{Motivation:}
+  Fluctuations in the importance scores of code change properties may impact {\em quality improvement plans}, i.e., team initiatives to reduce the rate of defects, which are based on interpretation of JIT models.
+  For example, if a quality improvement plan is formulated based on a large importance score of a property $p$, but $p$ drops in importance in the following period, even a perfectly executed quality improvement plan will have a smaller impact than anticipated.
+  On the other hand, if property $p$ has a small importance score in the past, but grows more important in the following period, the quality improvement plan may omit important focal points.
+  To better understand the impact that fluctuations have on quality improvement plans, we study the magnitude of these fluctuations in our JIT models.
+
+  \underline{Results:}
+The stability of property importance scores in our JIT models is project-sensitive.
+The contributions of impactful property families like {\em Size} are both consistently:
+(a) overestimated in our {\sc Qt} JIT models by a median of 5\% of the total explanatory power 
+and (b) underestimated in our {\sc OpenStack} JIT models by a median of 2\% of the total explanatory power.
+\end{enumerate}
+
+Our results lead us to conclude that properties of fix-inducing changes can fluctuate, which may impact both the performance and interpretation of JIT defect models.
+To mitigate the impact on model performance, researchers and practitioners should add recently accumulated data to the training set and retrain JIT models to contain fresh data from within the last six months.
+To better calibrate quality improvement plans (which are based on interpretation of the importance scores of code change properties), researchers and practitioners should put a greater emphasis on larger caches of data, which contain at least six months worth of data, to smooth the effect of spikes and troughs in the importance of properties of fix-inducing changes.
+
+\subsubsection*{Paper Organization}
+The remainder of the paper is organized as follows.
+Section~\ref{sec:related} discusses the related work.
+Section~\ref{sec:design} describes the design of our case study, while Section~\ref{sec:results} presents the results.
+Section~\ref{sec:practice} presents practical suggestions that are informed by our study results.
+Section~\ref{sec:threats} discloses the threats to the validity of our study.
+Finally, Section~\ref{sec:conclusions} draws conclusions.

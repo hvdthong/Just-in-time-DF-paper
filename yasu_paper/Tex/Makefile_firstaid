@@ -1,0 +1,65 @@
+FILE_NAME := report
+
+TEMP_FILES := \
+	$(FILE_NAME).aux \
+	$(FILE_NAME).bbl \
+	$(FILE_NAME).log \
+	$(FILE_NAME).blg \
+	$(FILE_NAME).brf \
+	$(FILE_NAME).out
+
+SECTION_FILES = \
+	conclusions.tex \
+	design.tex \
+	intro.tex \
+	preamble.tex \
+	related.tex \
+	report.tex \
+	results.tex \
+	threats.tex
+
+BIBTEX_FILES = \
+	report.bib
+
+GEN_FIGURES = \
+	$(qt_figs) \
+	$(openstack_figs)
+
+STATIC_FIGURES = \
+	figures/study_design.pdf
+
+TABLES = \
+	tables/cases.tex \
+	tables/metrics.tex \
+	tables/model.tex \
+	tables/overtime.tex
+
+DEBUG=no
+ifneq '$(DEBUG)' 'yes'
+LATEX_FLAGS="-interaction=batchmode"
+endif
+
+.DELETE_ON_ERROR:
+
+################################################################################
+# Main paper building
+################################################################################
+
+$(FILE_NAME).pdf: $(SECTION_FILES) $(GEN_FIGURES) $(STATIC_FIGURES) $(TABLES) \
+		$(BIBTEX_FILES)
+	pdflatex $(LATEX_FLAGS) $(FILE_NAME)
+	bibtex $(FILE_NAME)
+	pdflatex $(LATEX_FLAGS) $(FILE_NAME)
+	pdflatex $(LATEX_FLAGS) $(FILE_NAME)
+	rm -f $(TEMP_FILES)
+
+bibtex/report_bibdesk.bib:
+	if [ ! -d bibtex ]; then svn co --depth empty https://sailsvn.cs.queensu.ca/shane/ bibtex; fi
+	cd bibtex && svn up report_bibdesk.bib
+
+################################################################################
+# Clean
+################################################################################
+.PHONY: clean
+clean:
+	rm -f $(TEMP_FILES) $(FILE_NAME).pdf

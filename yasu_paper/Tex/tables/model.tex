@@ -1,0 +1,90 @@
+\begin{table*}[t]
+\centering
+\caption{
+  The performance of our models that identify risky changes.
+}
+\label{tab:revrate}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{cc|cc|cc|cc|cc|cc}
+\hline
+& & \multicolumn{4}{c|}{\bf Qt} & \multicolumn{4}{c|}{{\bf Kitware}} & \multicolumn{2}{c}{{\bf Openstack}} \\
+& & \multicolumn{2}{c}{Core} & \multicolumn{2}{c|}{Creator} & \multicolumn{2}{c}{VTK} & \multicolumn{2}{c|}{ITK} & \multicolumn{2}{c}{Openstack} \\
+\hline
+\multicolumn{2}{c|}{AUC (optimism-reduced)} & \multicolumn{2}{c}{0.71 (0.71)} & \multicolumn{2}{c|}{0.75 (0.74)} & \multicolumn{2}{c}{0.76 (0.74)} & \multicolumn{2}{c|}{0.81 (0.80)} & \multicolumn{2}{c}{0.73 (0.73)} \\
+%\multicolumn{2}{c|}{Somers' Dxy (optimism-reduced)} & \multicolumn{2}{c}{0.42 (0.41)} & \multicolumn{2}{c|}{0.49 (0.49)} & \multicolumn{2}{c}{0.52 (0.48)} & \multicolumn{2}{c|}{0.61 (0.59)} & \multicolumn{2}{c}{0.47 (0.46)} \\
+\multicolumn{2}{c|}{Brier score (optimism-reduced)} & \multicolumn{2}{c}{0.19 (0.19)} & \multicolumn{2}{c|}{0.19 (0.19)} & \multicolumn{2}{c}{0.11 (0.11)} & \multicolumn{2}{c|}{0.14 (0.14)} & \multicolumn{2}{c}{0.20 (0.20)} \\
+\multicolumn{2}{c|}{Wald $\chi^2$} & \multicolumn{2}{c}{3,067\three} & \multicolumn{2}{c|}{1,939\three} & \multicolumn{2}{c}{342\three} & \multicolumn{2}{c|}{494\three} & \multicolumn{2}{c}{1,717\three}\\
+\hline
+\multicolumn{2}{c|}{Budgeted Degrees of Freedom} & \multicolumn{2}{c}{475} & \multicolumn{2}{c|}{260} & \multicolumn{2}{c}{29} & \multicolumn{2}{c|}{34} & \multicolumn{2}{c}{263} \\
+\multicolumn{2}{c|}{Degrees of Freedom Spent} & \multicolumn{2}{c}{24} & \multicolumn{2}{c|}{28} & \multicolumn{2}{c}{32} & \multicolumn{2}{c|}{24} & \multicolumn{2}{c}{20} \\
+\hline
+\hline
+& & Overall & Nonlinear & Overall & Nonlinear & Overall & Nonlinear & Overall & Nonlinear \\
+\hline
+\multirow{2}{*}{Revisions}
+& D.F. & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & 4 & 3 & 4 & 3 & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c}{\multirow{2}{*}{$\dagger$}} \\
+& $\chi^2$ & & & 684\three & 495\three & 82\three & 48\three & & & & \\
+\hline
+\multirow{2}{*}{Review window}
+& D.F. & 4 & 3 & 4 & 3 & 4 & 3 & 4 & 3 & 4 & 3 \\
+& $\chi^2$ & 52\three & 50\three & 51\three & 50\three & $9^\circ$ & 8\one & $1^\circ$ & $<1^\circ$ & 20\three & 19\three \\
+\hline
+\multirow{2}{*}{Total discussion length}
+& D.F. & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c}{\multirow{2}{*}{$\dagger$}} \\
+& $\chi^2$ & & & & & & & & & & \\
+\hline
+\multirow{2}{*}{Reviewer comments}
+& D.F. & 4 & 3 & 4 & 3 & 4 & 3 & 4 & 3 & 4 & 3 \\
+& $\chi^2$ & 1,119\three & 856\three & $5^\circ$ & $5^\circ$ & 14\two & 14\two & 29\three & 17\three & 966\three & 754\three \\
+\hline
+\multirow{2}{*}{Voters}
+& D.F. & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & 4 & 3 & \multicolumn{2}{c}{\multirow{2}{*}{$\dagger$}} \\
+& $\chi^2$ & & & & & & & 97\three & 90\three & & \\
+\hline
+\multirow{2}{*}{Commenters}
+& D.F. & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c}{\multirow{2}{*}{$\dagger$}} \\
+& $\chi^2$ & & & & & & & & \\
+\hline
+\hline
+\multirow{2}{*}{Prior changes (author)}
+& D.F. & 4 & 3 & 4 & 3 & 4 & 3 & 4 & 3 & 4 & 3 \\
+& $\chi^2$ & 19\three & 16\two & 14\two & 12\two & $6^\circ$ & $6^\circ$ & $5^\circ$ & $4^\circ$ & $2^\circ$ & $2^\circ$ \\
+\hline
+\multirow{2}{*}{Recent changes (author)}
+& D.F. & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c}{\multirow{2}{*}{$\dagger$}} \\
+& $\chi^2$ & & & & & & & & & & \\
+\hline
+\multirow{2}{*}{Subsystem changes (author)}
+& D.F. & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c}{\multirow{2}{*}{$\dagger$}} \\
+& $\chi^2$ & & & & & & & & & & \\
+\hline
+\multirow{2}{*}{Prior changes (reviewer)}
+& D.F. & 4 & 3 & 4 & 3 & 4 & 3 & 4 & 3 & 4 & 3 \\
+& $\chi^2$ & 49\three & 41\three & $6^\circ$ & $6^\circ$ & $5^\circ$ & $2^\circ$ & 15\two & 12\two & 13\two & $3^\circ$ \\
+\hline
+\multirow{2}{*}{Recent changes (reviewer)}
+& D.F. & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c}{\multirow{2}{*}{$\dagger$}} \\
+& $\chi^2$ & & & & & & & & & & \\
+\hline
+\multirow{2}{*}{Subsystem changes (reviewer)}
+& D.F. & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & 4 & 3 & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c}{\multirow{2}{*}{$\dagger$}} \\
+& $\chi^2$ & & & & & 13\one & $5^\circ$ & & & & \\
+\hline
+\hline
+\multirow{2}{*}{Author awareness}
+& D.F. & 4 & 3 & 4 & 3 & 4 & 3 & \multicolumn{2}{c|}{\multirow{2}{*}{$\dagger$}} & \multicolumn{2}{c}{\multirow{2}{*}{$\dagger$}} \\
+& $\chi^2$ & 21\three & 8\one & 15\two & 15\two & 15\two & 14\two & & & & \\
+\hline
+\multirow{2}{*}{Reviewer awareness}
+& D.F. & 4 & 3 & 4 & 3 & 4 & 3 & 4 & 3 & 4 & 3 \\
+& $\chi^2$ & 74\three & 70\three & $9^\circ$ & $8^\circ$ & $1^\circ$ & $<1^\circ$ & $6^\circ$ & $5^\circ$ & $4^\circ$ & $3^\circ$ \\
+\hline
+\multicolumn{9}{p{0.9\textwidth}}{Discarded during:}\\
+\multicolumn{9}{p{0.9\textwidth}}{\hspace{1cm}$\dagger$ Variable clustering analysis ($|\rho| \ge 0.7$)}\\
+\multicolumn{9}{p{0.9\textwidth}}{\hspace{1cm}$\ddagger$ Redundant variable analysis (R$^2 \ge 0.9$)}\\
+\multicolumn{9}{p{0.9\textwidth}}{Statistical significance of explanatory power according to Wald $\chi^2$ likelihood ratio test:}\\
+\multicolumn{9}{p{0.9\textwidth}}{\hspace{1cm}$\circ$~$p \ge 0.05$; \one~$p < 0.05$; \two~$p < 0.01$; \three~$p < 0.001$}\\
+\multicolumn{9}{p{0.9\textwidth}}{- Nonlinear degrees of freedom not allocated}\\
+\end{tabular}
+}
+\end{table*}
