@@ -36,11 +36,13 @@ The convolutional layer plays a vital role in CNN and it takes advantage of the 
 f(x) = max(0, x)   
 \end{equation}
 
-The pooling layer aims to reduce 
-
-reduce the dimensionality of the representation, and thus further reduce the number of parameters and the computational
-complexity of the model.
-
+The pooling layer aims to reduce the dimensionality of the activation map, and further reduce the number of parameters and the computational helping to control overfitting problem~\cite{tolias2015particular}. The pooling layer spreads along the activation map and scales its dimensionality. There are three different types of pooling layers:
+\begin{itemize}
+\item Max pooling takes the largest element from each region of the activation map.
+\item Average pooling constructs the average value from each region of the activation map.
+\item Sum pooling sums all the elements from each region of the activation map. 
+\end{itemize}
+Figure~\ref{fig:cnn}
 
 
 
