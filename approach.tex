@@ -1,6 +1,6 @@
 \section{approach}
 \label{sec:approach}
-In this section, we first formulate the \emph{Just-In-Time} (JIT) defect prediction and provide an overview of our framework. We then describe the details of each part inside the framework. Finally, we present an algorithm for learning effective settings of our model's parameters. 
+In this section, we first formulate the \emph{Just-In-Time} (JIT) defect prediction problem and provide an overview of our framework. We then describe the details of each part inside the framework. Finally, we present an algorithm for learning effective settings of our model's parameters. 
 \subsection{Framework Overview}
 \label{sec:overview}
 
@@ -11,7 +11,7 @@ In this section, we first formulate the \emph{Just-In-Time} (JIT) defect predict
 \label{fig:overview}
 \end{figure}
 
-The goal of the just-in-time defect prediction model is to automatically label a commit change as bug or clean to help developers better focus on their efforts on assuring software quality. We consider the just-in-time defect prediction problem as a learning task to construct prediction function $\textbf{f}:
+The goal of the just-in-time defect prediction model is to automatically label a commit change as buggy or clean to help developers better focus on their efforts on assuring software quality. We consider the just-in-time defect prediction problem as a learning task to construct prediction function $\textbf{f}:
 \mathcal{X} \longmapsto \mathcal{Y}$, where $y_i \in \mathcal{Y} = \{0, 1\}$ indicates whether a commit change $x_i \in \mathcal{X}$ cleans ($y_i = 0$) or contains a buggy code ($y_i = 1$). The prediction function $\textbf{f}$ can be learned by minimizing the following objective function:
 \begin{equation}
 \underset{\textbf{f}}{min} \sum_{i}\mathcal{L}(\textbf{f}(x_i), y_i) + \lambda\Omega(\textbf{f})
