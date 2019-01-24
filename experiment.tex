@@ -4,7 +4,24 @@ In this section, we first describe the dataset used in our paper. We then introd
 
 \subsection{Dataset}
 \label{sec:dataset}
-\cmt{TODO: add the information about the dataset (Prof. Yasu: can you help to describe the datasets?)}
+We use two well-known software projects (i.e., QT and OPENSTACK) to evaluate the performance of \emph{Just-In-Time} (JIT) models. QT~\footnote{\url{https://www.qt.io/}}, developed by the Qt Company, is a cross-platform application framework and allows contributions from individual developers and organizations. On the otherhand, OPENSTACK is an open-source software platform for cloud computing and is deployed as a infrastructure-as-a-service which allows customers to access its resources. We follow McIntosh and Kamei~\cite{mcintosh2018fix} to clean the datasets. After cleaning process, the QT dataset contains 25,150 commits, while OPENSTACK dataset contains 12,374 commits. We also follow~\cite{mcintosh2018fix} to stratify our data into six months periods to have substantial amount of commits for training and testing JIT models. Table~\ref{tab:data} briefly summarize the datasets used in our paper. 
+
+\begin{table}[t!]
+  \centering
+  \caption{Summary of the datasets used in this work.}
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multirow{2}[4]{*}{\textbf{Dataset}} & \multicolumn{2}{c|}{\textbf{Timespan}} & \multicolumn{2}{c|}{\textbf{Commits}} \\
+\cline{2-5}          & \textbf{Start} & \textbf{End} & \textbf{Total} & \textbf{Defective} \\
+    \hline
+    \hline
+    QT    & 06/2011 &  03/2014 & 25,150 & 2,002 (8\%) \\
+    \hline
+    OPENSTACK & 11/2011 &  02/2014 & 12,374 & 1,616 (13\%) \\
+    \hline
+    \end{tabular}%
+  \label{tab:data}%
+\end{table}%
 
 \subsection{Baseline}
 \label{sec:baseline}
@@ -54,7 +71,7 @@ In the QT project, DeepJIT achieves AUC scores of 0.768, 0.764, and 0.765 in thr
 	\begin{tabular}{|l|c|c|c|c|c|c|}
 		\hline
 		\multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
-		\cline{2-7}          & Cross-validation & Short-period & Long-period & Cross-validation & Short-period & Long-period \\
+		\cline{2-7}          & \textbf{Cross-validation} & \textbf{Short-period} & \textbf{Long-period} & \textbf{Cross-validation} & \textbf{Short-period} & \textbf{Long-period} \\
 		\hline
 		\hline
 		JIT   & 0.701 & 0.703 & 0.702 & 0.691 & 0.711 & 0.706 \\
@@ -77,7 +94,7 @@ To answer this question, we employ an ablation test~\cite{korbar2017deep, liu201
     \begin{tabular}{|l|c|c|c|c|c|c|}
     \hline
     \multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
-\cline{2-7}          & \multicolumn{1}{l|}{Cross-validation} & \multicolumn{1}{l|}{Short-period} & \multicolumn{1}{l|}{Long-period} & \multicolumn{1}{l|}{Cross-validation} & \multicolumn{1}{l|}{Short-period} & \multicolumn{1}{l|}{Long-period} \\
+\cline{2-7}          & \multicolumn{1}{l|}{\textbf{Cross-validation}} & \multicolumn{1}{l|}{\textbf{Short-period}} & \multicolumn{1}{l|}{\textbf{Long-period}} & \multicolumn{1}{l|}{\textbf{Cross-validation}} & \multicolumn{1}{l|}{\textbf{Short-period}} & \multicolumn{1}{l|}{\textbf{Long-period}} \\
     \hline
     \hline
     DeepJIT-Msg & 0.641 & 0.609 & 0.638 & 0.583 & 0.659 & 0.689 \\
@@ -95,11 +112,11 @@ To answer this question, we employ an ablation test~\cite{korbar2017deep, liu201
 
 \begin{table*}[t!]
   \centering
-  \caption{Combination of DeepJIT with the code features derived from~\cite{mcintosh2018fix}}
+  \caption{Combination of DeepJIT with the manually code features from~\cite{mcintosh2018fix}}
     \begin{tabular}{|l|c|c|c|c|c|c|}
     \hline
     \multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
-\cline{2-7}          & Cross-validation & Short-period & Long-period & Cross-validation & Short-Period & Long-period \\
+\cline{2-7}          & \textbf{Cross-validation} & \textbf{Short-period} & \textbf{Long-period} & \textbf{Cross-validation} & \textbf{Short-Period} & \textbf{Long-period} \\
     \hline
     \hline
     DeepJIT & 0.768 & 0.764 & 0.765 & 0.751 & 0.781 & 0.771  \\
@@ -123,7 +140,7 @@ where $\oplus$ is the concatenation operator. Table~\ref{tab:combined} shows the
   \caption{Time costs of DeepJIT}
     \begin{tabular}{|c|c|c|c|c|c|c|}
     \hline
-    \multicolumn{1}{|c|}{\multirow{2}[4]{*}{Dataset}} & \multicolumn{2}{c|}{Cross-validation} & \multicolumn{2}{c|}{Short-period} & \multicolumn{2}{c|}{Long-period} \\
+    \multicolumn{1}{|c|}{\multirow{2}[4]{*}{Dataset}} & \multicolumn{2}{c|}{\textbf{Cross-validation}} & \multicolumn{2}{c|}{\textbf{Short-period}} & \multicolumn{2}{c|}{\textbf{Long-period}} \\
 \cline{2-7}          & Training time & Testing time & Training time & Testing time & Training time & Testing time \\
     \hline
     \hline
