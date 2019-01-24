@@ -10,7 +10,7 @@ Table~\ref{tab:data} briefly summarizes the datasets used in our paper. We follo
 
 \begin{table}[t!]
   \centering
-  \caption{Summary of the datasets used in this work.}
+  \caption{Summary of the datasets used in this work}
     \begin{tabular}{|c|c|c|c|c|}
     \hline
     \multirow{2}[4]{*}{\textbf{Dataset}} & \multicolumn{2}{c|}{\textbf{Timespan}} & \multicolumn{2}{c|}{\textbf{Commits}} \\
@@ -27,9 +27,64 @@ Table~\ref{tab:data} briefly summarizes the datasets used in our paper. We follo
 
 \subsection{Baseline}
 \label{sec:baseline}
+
+\begin{table*}[ht!]
+\centering
+\caption{An summary of the code features, adopted from~\cite{mcintosh2018fix}}
+\label{tab:metrics}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{c|p{2cm}|p{5.7cm}|p{8.4cm}}
+\hline
+& {\bf Property} & {\bf Description} & {\bf Rationale} \\
+\hline
+\hline
+\multirow{2}{*}{\rotatebox{90}{Size}}
+& Lines added & The number of added lines. &  The more code that is changed, the more likely that a given commit \\
+\cline{2-3}
+& Lines deleted & The number of lines deleted. & has defects~\cite{nagappan2006icse}.\\
+\hline
+\multirow{4}{*}{\rotatebox{90}{Diffusion}}
+& Subsystems & The number of modified subsystems. & Scattered changes may have defects compared to focused ones~\cite{d2010extensive, hassan2009icse}. \\
+\cline{2-3}
+& Directories & The number of modified directories. & \\
+\cline{2-3}
+& Files & The number of modified files. &  \\
+\cline{2-3}
+& Entropy & The spread of modified lines across file. &  \\
+\hline
+\multirow{6}{*}{\rotatebox{90}{History}}
+& Unique changes & The number of prior changes to the modified files. & More changes intend to have defects since developers need to track many previous changes~\cite{kamei2013tse}.\\
+\cline{2-4}
+& Developers & The number of developers who have changed the modified files in the past. & Files previously touched by more developers are likely more risky~\cite{matsumoto2010promise}. \\
+\cline{2-4}
+& Age & The time interval between the last and current changes. & More recently changed code is riskier than older code~\cite{graves2000tse}. \\
+\hline
+\multirow{11}{*}{\rotatebox{90}{Author/Rev. Experience}}
+& Prior changes & The number of prior changes that an actor\smallnum{1} has participated in.\smallnum{2} & Changes that are produced by novices are likely to be more risky than changes produced by experienced developers~\cite{mockus2000bell}. \\
+\cline{2-3}
+& Recent changes & The number of prior changes that an actor has participated in weighted by the age of the changes (older changes are given less weight than recent ones). & \\
+\cline{2-3}
+& Subsystem changes & The number of prior changes to the modified subsystem(s) that an actor has participated in. & \\
+\cline{2-4}
+& Awareness\smallnum{3} & The proportion of the prior changes to the modified subsystem(s) that an actor has participated in. & Changes that involve developers who are aware of the prior changes in the impacted subsystems are likely to be less risky than those that do not. \\
+\hline
+\multirow{12}{*}{\rotatebox{90}{Review}}
+& Iterations & Number of times that a change was revised prior to integration. & The quality of a change likely improves with each iteration. Hence, changes that undergo plenty of iterations prior to integration may be less risky than those that undergo few~\cite{porter1998tosem, thongtanunam2015msr}.\\
+\cline{2-4}
+& Reviewers & Number of reviewers who have voted on whether a change should be integrated or abandoned. & Since more reviewers will likely raise more issues so that they may be addressed prior to integration, changes with many reviewers are likely to be less risky than those with fewer reviewers~\cite{raymond}. \\
+\cline{2-4}
+& Comments & The number of non-automated, non-owner comments posted during the review of a change. & Changes with short discussions may not be deriving value from the review process, and hence may be more risky~\cite{mcintosh2014msr, mcintosh2016emse}.\\
+\cline{2-4}
+& Review window & The length of time between the creation of a review request and its final approval for integration. & Changes with shorter review windows may not have spent enough time carefully analyzing the implications of a change prior to integration, and hence may be more risky~\cite{porter1998tosem, thongtanunam2015msr}.\\
+\hline
+\multicolumn{4}{l}{\smallnum{1} Either the author or reviewer of a change. \smallnum{2} Either authored or reviewed. \smallnum{3} New property proposed in this paper.}
+\end{tabular}
+}
+\end{table*}
+
 We compared DeepJIT with two other state-of-the-art baselines in the \emph{Just-In-Time} (JIT) defect prediction:
 \begin{itemize}
-\item JIT: The method for identifying fix-inducing code changes was proposed by McIntosh and Kamei~\cite{mcintosh2018fix}. The method used a nonlinear variant of multiple regression modeling~\cite{fox1997applied} to build a classification model for automatically identifying defects in commits. The set of code features, using six families of code change properties, were primarily derived from prior studies~\cite{Kamei:2013:LES, Kim:2008:CSC, Kononenko:2015, Mockus2000}. These properties were: the magnitude of change, the dispersion of the changes, the defect proneness of prior changes, the experience of the author, the code reviewers, and the degree of participation in the code review. 
+\item JIT: The method for identifying fix-inducing code changes was proposed by McIntosh and Kamei~\cite{mcintosh2018fix}. The method used a nonlinear variant of multiple regression modeling~\cite{fox1997applied} to build a classification model for automatically identifying defects in commits. The set of code features, using six families of code change properties, were primarily derived from prior studies~\cite{Kamei:2013:LES, Kim:2008:CSC, Kononenko:2015, Mockus2000}. These properties were: the magnitude of change, the dispersion of the changes, the defect proneness of prior changes, the experience of the author, the code reviewers, and the degree of participation in the code review. Table~\ref{tab:metrics} briefly summary the code features extracted from code change properties.
 \item DBNJIT: The model adopted Deep Belief Network (DBN)~\cite{hinton2006reducing}, one of the state-of-the-art deep learning approaches in performing nonlinear dimensionality reduction, to generate a more expressive feature set from the initial feature set~\cite{Yang:2015:DLJ}. The generated feature set, a complicated nonlinear combination of the initial features, was put to a machine learning classifier~\cite{nasrabadi2007pattern} to predict defects in commits. 
 \end{itemize}
 
@@ -53,7 +108,7 @@ Curve (AUC) to measure the discriminatory power of DeepJIT, i.e., their ability 
     \label{fig:openstack}
 \end{figure}
 
-One of the key challenge in training DeepJIT is how to select the dimension of the word vectors for the commit message ($d_m$) and code changes ($d_c$) and the size of the convolution layers (i.e., see Section~\ref{sec:cnn_msg} and Section~\ref{sec:cnn_code}). We evaluate the performance of DeepJIT, using 5-fold cross validation, across different a number of dimension of word vectors and a number of filters. Figure~\ref{fig:qt} and Figure~\ref{fig:openstack} present the AUC results of DeepJIT in two hyperparameters. The figures show that the AUC achieves best results when the number of dimension of word vectors and the number of filters are set to 2. We note that there are some hyperparameters which are need to be set. The batch size is set to 32. We train DeepJIT using Adam~\cite{kingma2014adam} with shuffled mini-batches. We train DeepJIT for 100 epochs. We also apply the early stopping strategy~\cite{prechelt1998automatic, caruana2001overfitting} to avoid overfitting problem during the training process. Typically, we stop the training if the value of the objective function (see Equation~\ref{eq:cost}) has not been update in the last 5 epochs. The size of DeepJIT's fully-connected layer described in Section~\ref{sec:ftr_combine} is set to 512. All the hyperparameters in our paper are widely used in the deep learning community~\cite{severyn2015learning, huo2016learning, huo2017enhancing, hinton2012improving}. 
+One of the key challenge in training DeepJIT is how to select the dimension of the word vectors for the commit message ($d_m$) and code changes ($d_c$) and the size of the convolution layers (i.e., see Section~\ref{sec:cnn_msg} and Section~\ref{sec:cnn_code}). We evaluate the performance of DeepJIT, using \textit{5}-fold cross validation, across different a number of dimension of word vectors and a number of filters. Figure~\ref{fig:qt} and Figure~\ref{fig:openstack} present the AUC results of DeepJIT in two hyperparameters. The figures show that the AUC achieves best results when the number of dimension of word vectors and the number of filters are set to 64. We note that there are some hyperparameters which are need to be set. The batch size is set to 32. The size of DeepJIT's fully-connected layer described in Section~\ref{sec:ftr_combine} is set to 512. We train DeepJIT using Adam~\cite{kingma2014adam} with shuffled mini-batches. We also train DeepJIT for 100 epochs. We apply the early stopping strategy~\cite{prechelt1998automatic, caruana2001overfitting} to avoid overfitting problem during the training process. Typically, we stop the training if the value of the objective function (see Equation~\ref{eq:cost}) has not been update in the last 5 epochs. All the hyperparameters in our paper are widely used in the deep learning community~\cite{severyn2015learning, huo2016learning, huo2017enhancing, hinton2012improving}.
 
 % For the size of the convolutional filters, we choose 64. The size of DeepJIT's fully-connected layer described in Section~\ref{sec:ftr_combine} is set to 512. The word vectors dimension of the commit message ($d_m$) and code changes ($d_c$) are set to 64. We train DeepJIT using Adam~\cite{kingma2014adam} with shuffled mini-batches.  The batch size is set to 32. We train DeepJIT for 100 epochs. We also apply the early stopping strategy~\cite{prechelt1998automatic, caruana2001overfitting} to avoid overfitting problem during the training process. Typically, we stop the training if the value of the objective function (see Equation~\ref{eq:cost}) has not been update in the last 5 epochs. All these hyperparameters in our paper are widely used in the deep learning community~\cite{severyn2015learning, huo2016learning, huo2017enhancing, hinton2012improving}. 
  
@@ -86,7 +141,7 @@ In the QT project, DeepJIT achieves AUC scores of 0.768, 0.764, and 0.765 in thr
 
 \begin{table*}[t!]
 	\centering
-	\caption{The AUC results of DeepJIT vs. with other baselines in three types of JIT models: random, short-period, and long-period.}
+	\caption{The AUC results of DeepJIT vs. with other baselines in three types of JIT models: random, short-period, and long-period}
 	\begin{tabular}{|l|c|c|c|c|c|c|}
 		\hline
 		\multirow{2}[4]{*}{} & \multicolumn{3}{c|}{QT} & \multicolumn{3}{c|}{OPENSTACK} \\
