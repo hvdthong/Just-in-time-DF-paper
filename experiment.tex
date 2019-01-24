@@ -4,7 +4,9 @@ In this section, we first describe the dataset used in our paper. We then introd
 
 \subsection{Dataset}
 \label{sec:dataset}
-We use two well-known software projects (i.e., QT and OPENSTACK) to evaluate the performance of \emph{Just-In-Time} (JIT) models. QT~\footnote{\url{https://www.qt.io/}}, developed by the Qt Company, is a cross-platform application framework and allows contributions from individual developers and organizations. On the otherhand, OPENSTACK is an open-source software platform for cloud computing and is deployed as a infrastructure-as-a-service which allows customers to access its resources. We follow McIntosh and Kamei~\cite{mcintosh2018fix} to clean the datasets. After cleaning process, the QT dataset contains 25,150 commits, while OPENSTACK dataset contains 12,374 commits. We also follow~\cite{mcintosh2018fix} to stratify our data into six months periods to have substantial amount of commits for training and testing JIT models. Table~\ref{tab:data} briefly summarize the datasets used in our paper. 
+We use two well-known software projects (i.e., QT and OPENSTACK) to evaluate the performance of \emph{Just-In-Time} (JIT) models. QT~\footnote{\url{https://www.qt.io/}}, developed by the Qt Company, is a cross-platform application framework and allows contributions from individual developers and organizations. On the otherhand, OPENSTACK~\footnote{\url{https://www.openstack.org/}} is an open-source software platform for cloud computing and is deployed as a infrastructure-as-a-service which allows customers to access its resources. 
+
+Table~\ref{tab:data} briefly summarizes the datasets used in our paper. We follow McIntosh and Kamei~\cite{mcintosh2018fix} to clean the datasets. After cleaning process, the QT dataset contains 25,150 commits, while OPENSTACK dataset contains 12,374 commits. We also follow~\cite{mcintosh2018fix} to stratify our data into six months periods to have substantial amount of commits for training and testing JIT models. 
 
 \begin{table}[t!]
   \centering
@@ -28,17 +30,34 @@ We use two well-known software projects (i.e., QT and OPENSTACK) to evaluate the
 We compared DeepJIT with two other state-of-the-art baselines in the \emph{Just-In-Time} (JIT) defect prediction:
 \begin{itemize}
 \item JIT: The method for identifying fix-inducing code changes was proposed by McIntosh and Kamei~\cite{mcintosh2018fix}. The method used a nonlinear variant of multiple regression modeling~\cite{fox1997applied} to build a classification model for automatically identifying defects in commits. The set of code features, using six families of code change properties, were primarily derived from prior studies~\cite{Kamei:2013:LES, Kim:2008:CSC, Kononenko:2015, Mockus2000}. These properties were: the magnitude of change, the dispersion of the changes, the defect proneness of prior changes, the experience of the author, the code reviewers, and the degree of participation in the code review. 
-\item DBN-JIT: The model adopted Deep Belief Network (DBN)~\cite{hinton2006reducing}, one of the state-of-the-art deep learning approaches in performing nonlinear dimensionality reduction, to generate a more expressive feature set from the initial feature set~\cite{Yang:2015:DLJ}. The generated feature set, a complicated nonlinear combination of the initial features, was put to a machine learning classifier~\cite{nasrabadi2007pattern} to predict defects in commits. 
+\item DBNJIT: The model adopted Deep Belief Network (DBN)~\cite{hinton2006reducing}, one of the state-of-the-art deep learning approaches in performing nonlinear dimensionality reduction, to generate a more expressive feature set from the initial feature set~\cite{Yang:2015:DLJ}. The generated feature set, a complicated nonlinear combination of the initial features, was put to a machine learning classifier~\cite{nasrabadi2007pattern} to predict defects in commits. 
 \end{itemize}
 
-\subsection{Training and hyperparameters}
-\label{sec:training_parameters}
-For the size of the convolutional filters, we choose 64. The size of DeepJIT's fully-connected layer described in Section~\ref{sec:ftr_combine} is set to 512. The word vectors dimension of the commit message ($d_m$) and code changes ($d_c$) are set to 64. We train DeepJIT using Adam~\cite{kingma2014adam} with shuffled mini-batches.  The batch size is set to 32. We train DeepJIT for 100 epochs. We also apply the early stopping strategy~\cite{prechelt1998automatic, caruana2001overfitting} to avoid overfitting problem during the training process. Typically, we stop the training if the value of the objective function (see Equation~\ref{eq:cost}) has not been update in the last 5 epochs. All these hyperparameters in our paper are widely used in the deep learning community~\cite{severyn2015learning, huo2016learning, huo2017enhancing, hinton2012improving}. 
- 
 \subsection{Evaluation Metric}
 \label{sec:metric}
 To evaluate the accuracy of \emph{Just-In-Time} (JIT) models, we calculate  threshold-independent measures of model performance. Since our dataset is imbalanced data, we avoid using threshold-dependent measures (i.e., precision, recall, or F1) since these measures strongly depend on arbitraily thresholds~\cite{nguyen2009learning, gu2008data}. Following the previous work~\cite{mcintosh2018fix},  we use the Area Under the receiver operator characteristics
-Curve (AUC) to measure the discriminatory power of DeepJIT, i.e., their ability to differentiate between defects or clean commits. AUC computes the area under the curve plotting the true positive rate against the false positive rate, while applying multiple thresholds to determine if a commit is buggy or not. The values of AUC normally are ranged between 0 (worst discrimination) and 1 (perfect discrimination). 
+Curve (AUC) to measure the discriminatory power of DeepJIT, i.e., their ability to differentiate between defects or clean commits. AUC computes the area under the curve plotting the true positive rate against the false positive rate, while applying multiple thresholds to determine if a commit is buggy or not. The values of AUC normally are ranged between 0 (worst discrimination) and 1 (perfect discrimination).
+
+\subsection{Training and hyperparameters}
+\label{sec:training_parameters}
+\begin{figure}[t!]
+    \center
+    \includegraphics[width=\linewidth]{figs/QT.pdf}
+    \caption{The AUC results of DeepJIT across two different hyperparameters in QT project.}
+    \label{fig:qt}
+\end{figure}
+\begin{figure}[t!]
+    \center
+    \includegraphics[width=\linewidth]{figs/OPENSTACK.pdf}
+    \caption{The AUC results of DeepJIT across two different hyperparameters in OPENSTACK project.}
+    \label{fig:openstack}
+\end{figure}
+
+One of the key challenge in training DeepJIT is how to select the dimension of the word vectors for the commit message ($d_m$) and code changes ($d_c$) and the size of the convolution layers (i.e., see Section~\ref{sec:cnn_msg} and Section~\ref{sec:cnn_code}). We evaluate the performance of DeepJIT, using 5-fold cross validation, across different a number of dimension of word vectors and a number of filters. Figure~\ref{fig:qt} and Figure~\ref{fig:openstack} present the AUC results of DeepJIT in two hyperparameters. The figures show that the AUC achieves best results when the number of dimension of word vectors and the number of filters are set to 2. We note that there are some hyperparameters which are need to be set. The batch size is set to 32. We train DeepJIT using Adam~\cite{kingma2014adam} with shuffled mini-batches. We train DeepJIT for 100 epochs. We also apply the early stopping strategy~\cite{prechelt1998automatic, caruana2001overfitting} to avoid overfitting problem during the training process. Typically, we stop the training if the value of the objective function (see Equation~\ref{eq:cost}) has not been update in the last 5 epochs. The size of DeepJIT's fully-connected layer described in Section~\ref{sec:ftr_combine} is set to 512. All the hyperparameters in our paper are widely used in the deep learning community~\cite{severyn2015learning, huo2016learning, huo2017enhancing, hinton2012improving}. 
+
+% For the size of the convolutional filters, we choose 64. The size of DeepJIT's fully-connected layer described in Section~\ref{sec:ftr_combine} is set to 512. The word vectors dimension of the commit message ($d_m$) and code changes ($d_c$) are set to 64. We train DeepJIT using Adam~\cite{kingma2014adam} with shuffled mini-batches.  The batch size is set to 32. We train DeepJIT for 100 epochs. We also apply the early stopping strategy~\cite{prechelt1998automatic, caruana2001overfitting} to avoid overfitting problem during the training process. Typically, we stop the training if the value of the objective function (see Equation~\ref{eq:cost}) has not been update in the last 5 epochs. All these hyperparameters in our paper are widely used in the deep learning community~\cite{severyn2015learning, huo2016learning, huo2017enhancing, hinton2012improving}. 
+ 
+ 
 
 \subsection{Research Questions and Results}
 \label{sec:rq_results}
@@ -63,7 +82,7 @@ Figure~\ref{fig:splitting} describes how the training data is selected to train 
 
 Table~\ref{tab:results} shows the AUC results of DeepJIT as well as other baselines considering the three evaluation settings: cross-validation, short-period, and long-period. The difference between results obtained using cross-validation, short-period, and long-period settings is quite small (i.e., below 2.2\%) which suggests that there is no difference between training on past or future data. 
 \cmt{TODO: Prof. Hoa, do you have any explaination about it?} 
-In the QT project, DeepJIT achieves AUC scores of 0.768, 0.764, and 0.765 in three different JIT settings: random, short-period, and long-period, respectively. Comparing them to the best performing baseline (i.e., DBNJIT), DeepJIT achieves improvements of 8.96\%, 7.00\%, and 8.05\% in term of AUC. In the OPENSTACK project, DeepJIT also constitutes improvements of 8.21\%, 9.08\%, and 8.29\% in term of AUC compared to DBNJIT (the best performing baseline). 
+In the QT project, DeepJIT achieves AUC scores of 0.768, 0.764, and 0.765 in three different JIT settings: cross-validation, short-period, and long-period, respectively. Comparing them to the best performing baseline (i.e., DBNJIT), DeepJIT achieves improvements of 8.96\%, 7.00\%, and 8.05\% in term of AUC. In the OPENSTACK project, DeepJIT also constitutes improvements of 8.21\%, 9.08\%, and 8.29\% in term of AUC compared to DBNJIT (the best performing baseline). We also employ the Scott-Knott test~\cite{ghotra2015revisiting} on the cross-validation setting to statistically compared the differences between the three considered JIT models. The results show that DeepJIT consistently appears in the top Scott-Knott ESD rank in term of AUC (i.e, DeepJIT $>$ DBNJIT $>$ JIT).  
 
 \begin{table*}[t!]
 	\centering
@@ -86,7 +105,7 @@ In the QT project, DeepJIT achieves AUC scores of 0.768, 0.764, and 0.765 in thr
 
 \noindent \textbf{RQ2: Does the proposed model benefit from both commit message and the code changes?}
 
-To answer this question, we employ an ablation test~\cite{korbar2017deep, liu2017deep}, by ignoring the commit message and the code change in a commit and then evaluate the AUC performance. Specifically, we create two different variants of DeepJIT, namely DeepJIT-Msg and DeeJIT-Code. DeepJIT-Msg only considers commit message information while DeepJIT-Code only uses commit code information. We again use the three types of model settings (i.e., random, short-period, and long period) and the AUC scores to evaluate the performance of our models. Table~\ref{tab:variants} shows the performance of DeepJIT degrades if we ignore any one of the considered types of information (i.e., commit message or code changes). The AUC scores drop by 19.81\%, 28.45\%, and 19.01\% in the project QT and drop by 33.96\%, 16.99\%, and 9.01\% in the project OPENSTACK on the three types of JIT models if we ignore commit messages. The AUC scores drop by 4.07\%, 4.09\%, and 5.23\% in the project QT and drop by 1.56\%, 4.47\%, and 3.02\% in the project OPENSTACK on the three types of JIT models if we ignore code changes information. It suggests that each kind of information contributes to DeepJIT's performance. Moreover, it also indicates that the code changes are more important to detect defects in a commit than the commit message information.  
+To answer this question, we employ an ablation test~\cite{korbar2017deep, liu2017deep}, by ignoring the commit message and the code change in a commit and then evaluate the AUC performance. Specifically, we create two different variants of DeepJIT, namely DeepJIT-Msg and DeeJIT-Code. DeepJIT-Msg only considers commit message information while DeepJIT-Code only uses commit code information. We again use the three types of model settings (i.e., random, short-period, and long period) and the AUC scores to evaluate the performance of our models. Table~\ref{tab:variants} shows the performance of DeepJIT degrades if we ignore any one of the considered types of information (i.e., commit message or code changes). The AUC scores drop by 19.81\%, 28.45\%, and 19.01\% in the project QT and drop by 9.00\%, 33.96\%, and 16.00\% in the project OPENSTACK on the three types of JIT models if we ignore commit messages. The AUC scores drop by 4.07\%, 4.09\%, and 5.23\% in the project QT and drop by 3.02\%, 1.56\%, and 4.47\% in the project OPENSTACK on the three types of JIT models if we ignore code changes information. It suggests that each kind of information contributes to DeepJIT's performance. Moreover, it also indicates that the code changes are more important to detect defects in a commit than the commit message information. 
 
 \begin{table*}[t!]
   \centering
@@ -97,11 +116,11 @@ To answer this question, we employ an ablation test~\cite{korbar2017deep, liu201
 \cline{2-7}          & \multicolumn{1}{l|}{\textbf{Cross-validation}} & \multicolumn{1}{l|}{\textbf{Short-period}} & \multicolumn{1}{l|}{\textbf{Long-period}} & \multicolumn{1}{l|}{\textbf{Cross-validation}} & \multicolumn{1}{l|}{\textbf{Short-period}} & \multicolumn{1}{l|}{\textbf{Long-period}} \\
     \hline
     \hline
-    DeepJIT-Msg & 0.641 & 0.609 & 0.638 & 0.583 & 0.659 & 0.689 \\
+    DeepJIT-Msg & 0.641 & 0.609 & 0.638 & 0.689 & 0.583 & 0.659 \\
     \hline
-    DeepJIT-Code & 0.738 & 0.734 & 0.727 & 0.769 & 0.738 & 0.729 \\
+    DeepJIT-Code & 0.738 & 0.734 & 0.727 & 0.729 & 0.769 & 0.738 \\
     \hline
-    DeepJIT & \textbf{0.768} & \textbf{0.764} & \textbf{0.765} & \textbf{0.781} & \textbf{0.771} & \textbf{0.751} \\
+    DeepJIT & \textbf{0.768} & \textbf{0.764} & \textbf{0.765} & \textbf{0.751} & \textbf{0.781} & \textbf{0.771} \\
     \hline
     \end{tabular}%
   \label{tab:variants}%
@@ -121,7 +140,7 @@ To answer this question, we employ an ablation test~\cite{korbar2017deep, liu201
     \hline
     DeepJIT & 0.768 & 0.764 & 0.765 & 0.751 & 0.781 & 0.771  \\
     \hline
-    DeepJIT-Combined & \textbf{0.779} & \textbf{0.788} & \textbf{0.786}  & \text{0.760} & \textbf{0.814} & \textbf{0.799} \\
+    DeepJIT-Combined & \textbf{0.779} & \textbf{0.788} & \textbf{0.786}  & \textbf{0.760} & \textbf{0.814} & \textbf{0.799} \\
     \hline
     \end{tabular}%
   \label{tab:combined}%
@@ -152,6 +171,6 @@ where $\oplus$ is the concatenation operator. Table~\ref{tab:combined} shows the
   \label{tab:cost}%
 \end{table*}%
 
-We train and test DeepJIT on NVIDIA DGX1 with Tesla P100~\cite{gawande2018scaling}. Table~\ref{tab:cost} shows the time costs of DeepJIT in three types of JIT's models (i.e., random, short-period, and long-period) on QT and OPENSTACK. 
+We train and test DeepJIT on NVIDIA DGX1 with Tesla P100~\cite{gawande2018scaling}. Table~\ref{tab:cost} shows the time costs of DeepJIT in three types of JIT's models (i.e., cross-validation, short-period, and long-period) on QT and OPENSTACK. 
 \cmt{Prof. Hoa: do you have any idea how to describe the time cost?}
 
