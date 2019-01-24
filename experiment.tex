@@ -62,7 +62,7 @@ To address RQ1, we evaluate how a JIT model, which is trained by a training data
 Figure~\ref{fig:splitting} describes how the training data is selected to train models  following the short-period and long-period settings. We use the last period (i.e., period 5) as a testing data. While the short-period model is trained using the commits that occurred during period 4, the long-period model is trained using the commits that occurred from period 1 to period 4. After training the short-period and long-period model, we measure their performance of these models using AUC described in Section~\ref{sec:metric}.
 
 Table~\ref{tab:results} shows the AUC results of DeepJIT as well as other baselines considering the three evaluation settings: cross-validation, short-period, and long-period. The difference between results obtained using cross-validation, short-period, and long-period settings is quite small (i.e., below 2.2\%) which suggests that there is no difference between training on past or future data. 
-% \cmt{TODO: Prof. Hoa, do you have any explaination about it?} 
+\cmt{TODO: Prof. Hoa, do you have any explaination about it?} 
 In the QT project, DeepJIT achieves AUC scores of 0.768, 0.764, and 0.765 in three different JIT settings: random, short-period, and long-period, respectively. Comparing them to the best performing baseline (i.e., DBNJIT), DeepJIT achieves improvements of 8.96\%, 7.00\%, and 8.05\% in term of AUC. In the OPENSTACK project, DeepJIT also constitutes improvements of 8.21\%, 9.08\%, and 8.29\% in term of AUC compared to DBNJIT (the best performing baseline). 
 
 \begin{table*}[t!]
