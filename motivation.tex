@@ -8,14 +8,16 @@ We first present an example of commit change motivating our deep learning framew
 \label{sec:examle}
 \begin{figure*}
 \center
-\includegraphics[scale=0.3]{figs/example.pdf}
-\caption{An example of a commit change.}
+\includegraphics[scale=0.25]{figs/example.pdf}
+\caption{An example of a buggy commit change.}
 \label{fig:example}
 \end{figure*}
 
-Figure~\ref{fig:example}
+Figure~\ref{fig:example} shows a sample of a buggy commit. The patch contains two pieces of information, i.e., a commit message (line 4-10) and a set of code changes (i.e., 11-28). Previous works mainly depend on a set of manually features extracted from code changes~\cite{Yang:2015:DLJ, mcintosh2018fix}, however, the manual code features might overlook features which find helpful to identify a buggy commit. Moreover, the commit message in the commit is also ignored. Thus, a powerful feature representation of a commit leverages the semantic and syntactical structure of code changes is needed. 
 
-\subsection{Convolutional Neural Networks}
+Inspired by a deep learning Convolutional Neural Network (CNN), our deep learning \emph{Just-In-Time} (JIT) defect prediction model (DeepJIT) aims to automatically extract features of the commit message and the code changes of a given commit, respectively. These features are then combined to evaluate whether the given commit is buggy. 
+
+\subsection{Convolutional Neural Network}
 \label{sec:background_cnn}
 
 \begin{figure*}[t!]
