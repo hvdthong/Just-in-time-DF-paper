@@ -33,7 +33,7 @@ Table~\ref{tab:data} briefly summarizes the datasets used in our paper. We follo
 \caption{An summary of the code features, adopted from~\cite{mcintosh2018fix}}
 \label{tab:metrics}
 \resizebox{\textwidth}{!}{
-\begin{tabular}{c|p{2cm}|p{5.7cm}|p{8.4cm}}
+\begin{tabular}{|c|p{2cm}|p{5.7cm}|p{8.4cm}|}
 \hline
 & {\bf Property} & {\bf Description} & {\bf Rationale} \\
 \hline
@@ -44,7 +44,7 @@ Table~\ref{tab:data} briefly summarizes the datasets used in our paper. We follo
 & Lines deleted & The number of lines deleted. & has defects~\cite{nagappan2006icse}.\\
 \hline
 \multirow{4}{*}{\rotatebox{90}{Diffusion}}
-& Subsystems & The number of modified subsystems. & Scattered changes may have defects compared to focused ones~\cite{d2010extensive, hassan2009icse}. \\
+& Subsystems & The number of modified subsystems. & Scattered changes may have defects compared to focused ones~\cite{Ambros2010, hassan2009icse}. \\
 \cline{2-3}
 & Directories & The number of modified directories. & \\
 \cline{2-3}
@@ -53,7 +53,7 @@ Table~\ref{tab:data} briefly summarizes the datasets used in our paper. We follo
 & Entropy & The spread of modified lines across file. &  \\
 \hline
 \multirow{6}{*}{\rotatebox{90}{History}}
-& Unique changes & The number of prior changes to the modified files. & More changes intend to have defects since developers need to track many previous changes~\cite{kamei2013tse}.\\
+& Unique changes & The number of prior changes to the modified files. & More changes intend to have defects since developers need to track many previous changes~\cite{Kamei:2013:LES}.\\
 \cline{2-4}
 & Developers & The number of developers who have changed the modified files in the past. & Files previously touched by more developers are likely more risky~\cite{matsumoto2010promise}. \\
 \cline{2-4}
