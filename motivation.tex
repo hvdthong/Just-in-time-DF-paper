@@ -3,24 +3,38 @@
 \section{Background}
 \label{sec:background}
 
-We first present an example of commit change motivating our deep learning framework. We then briefly introduce a background knowledge about Convolutional Neural Network (CNN) used to extract features in the commit change. 
+In this section, we first present an example of commit change motivating our deep learning framework. We then briefly introduce background knowledge about Convolutional Neural Network (CNN) used to extract features in the commit change. 
 
-\subsection{Code changes}\label{sec:examle}
+\subsection{A Buggy Commit And Process Of Reviewing Commits}
+\label{sec:examle}
+
 \begin{figure}[t!]
 \center
 \includegraphics[scale=0.2]{figs/example.pdf}
-\caption{An example of a buggy commit change.}
+\caption{An example of a buggy commit change in OPENSTACK.}
 \label{fig:example}
 \end{figure} 
-Figure~\ref{fig:example} shows a sample of a buggy commit. The buggy commit contains many pieces of information, i.e., a commit id (line 1), a author name (line 2), a commit date (line 3), a commit message (line 4-10) and a set of code changes (i.e., 11-28). The commit message plays an important role when you commit your change since it is the first thing people will see about the change. A good commit message can help maintainers to speed up the reviewing process and write a good release note. A set of code changes includes changes of multiple files and each file includes a number of deleted and added lines representing the change. In the Figure~\ref{fig:example}, line 16 (starting with \texttt{-}) and line 17-20 (starting with \texttt{+}) indicates the deleted and added lines of a change file (namely \texttt{3cb5d900c5de\_security\_groups.py}), respectively. 
 
-Previous works mainly depend on a set of manually features extracted from code changes~\cite{Yang:2015:DLJ, mcintosh2018fix}, however, the manual code features might overlook features which find helpful to identify a buggy commit. Moreover, the commit message in the commit is also ignored. Thus, a powerful feature representation of commit message and code changes is needed to detect buggy commits. 
+Figure~\ref{fig:example} shows an example of a buggy commit in OPENSTACK. The buggy commit contains many pieces of information, i.e., a commit id (line 1), an author name (line 2), a commit date (line 3), a commit message (line 4-10) and a set of code changes (i.e., 11-28). A set of code changes includes changes of multiple files and each file includes a number of deleted and added lines representing the change. In the Figure~\ref{fig:example}, line 16 (starting with \texttt{-}) and lines 17-20 (starting with \texttt{+}) indicates the deleted and added lines of a change file (namely \texttt{3cb5d900c5de$\_$security$\_$groups.py}), respectively. The commit message also plays an important role as a good commit message can help maintainers to speed up the reviewing process and write a good release note.
 
-Inspired by a deep learning Convolutional Neural Network (CNN)~\cite{lecun2015deep}, our deep learning \emph{Just-In-Time} (JIT) defect prediction model (DeepJIT) aims to automatically extract features of the commit message and the code changes of a given commit, respectively. These features are then combined to evaluate whether the given commit is buggy. 
-% The key challenge here is to capture the semantic and syntactical structure of the code changes in the given commit. 
-Different from the commit message, the code changes include a number of deleted and added lines across multiple files (see Figure~\ref{fig:example}). To solve this problem, we first learn the semantic features of each added or deleted line for each changed file using CNN framework, the semantic features of the added and deleted lines are then incorporated to build a new representation 
-% preserving the syntactical structure 
-of the change file. We again use CNN to extract features from the new representation of the change file. These features of all the change files are used to construct the features of the code changes in the given commit. Section~\ref{sec:approach} briefly describes DeepJIT. 
+To review a commit, QT and OPENSTACK use Gerrit~\footnote{https://code.google.com/p/gerrit/}, which is a code review tool for \texttt{git}-based software project. The process of reviewing code changes is as follows:
+\begin{itemize}
+    \item Upload change revision: An author of a code changes submits a new change to Gerrit and invites reviewers to comment it.
+    \item Execute sanity tests: Sanity tests verify that the code changes are compliant with the coding style conventions before sending to the reviewers.
+    \item Solicit peer feedback: The reviewers are asked to examine the code changes after it passes the sanity tests.
+    \item Initiate integration request: Teams are allowed to verify the code changes before integrating it into \texttt{git} repositories.
+    \item Execute integration tests: The integration testing system is run to ensure that the code changes that put in the \texttt{git} repositories is clean.
+    \item Final integration: After passing the integration testing, Gerrit automatically commits the code changes into the \texttt{git} repositories.
+\end{itemize}
+
+On occasion,  we omit the code review process due to a rush to integrate critical code
+changes. However, most code changes follow the code review process.
+
+% Previous works mainly depend on a set of manually defined features extracted from code changes~\cite{Yang:2015:DLJ, mcintosh2018fix}, however, the set of manual code features might overlook some helpful features to identify a buggy commit. Moreover, past studies also ignore the commit message. Thus, potentially rich source of information has not been tapped yet. 
+
+
+
+
 
 \subsection{Convolutional Neural Network}
 \label{sec:background_cnn}
