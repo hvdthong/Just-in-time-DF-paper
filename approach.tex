@@ -7,7 +7,7 @@ In this section, we first formulate the \emph{Just-In-Time} (JIT) defect predict
 \begin{figure}
 \center
 \includegraphics[scale=0.36]{figs/framework.pdf}
-\caption{The general framework of just-in-time defect prediction model.}
+\caption{The general framework of the \emph{Just-In-Time} defect prediction model.}
 \label{fig:overview}
 \end{figure}
 
@@ -18,9 +18,11 @@ The goal of a JIT defect prediction model is to automatically classify a commit 
 \end{equation}
 where $\mathcal{L}(.)$ is the empirical loss function measuring the difference between the predicted and the output label, $\Omega(\textbf{f})$ is a regularization function to prevent the over fitting problem, and $\lambda$ the trade-off between $\mathcal{L}(.)$ and $\Omega(\textbf{f})$. Figure~\ref{fig:overview} illustrates the overview framework of the JIT defect prediction model (namely DeepJIT). The model consists of four parts: input layer, feature extraction layer, feature combination layer, and the output layer. We explain the details of each part in the following subsections.
 
-\subsection{Input Layer}
+\subsection{Parsing a Commit to Input Layer}
 \label{sec:input_layer}
-To feed the raw textual data to convolutional layers for feature learning, we first encode a commit message and code changes into arrays and feed them in the input layer. For the commit message, we use NLTK~\cite{bird2004nltk}, which is a suite of libraries for natural language processing (NLP), to extract a sequence of words from it. We again use NLTK for parsing the code changes of a given commit. In particular, each change file in the code changes is parsed into a set of deleted and added lines, and each line is parsed into a sequence of words. We also ignore comments and blank lines in the change file. Following a previous work~\cite{white2015toward}, we replace a number (i.e., an integer, real number, hexadecimal number, etc.) with a \texttt{<num>} word. We also replace rare words (e.g. those occurring less than three times in the corpus) and tokens existing in test data but absent in the training data with a special \texttt{<unk>} word.
+To feed the raw textual data to convolutional layers for feature learning, we first encode a commit message and code changes into arrays and feed them in the input layer. For the commit message, we use NLTK~\cite{bird2004nltk}, which is a suite of libraries for natural language processing (NLP), to extract a sequence of words from it. We employ PorterStemmer~\cite{willett2006porter} to produce root forms of words. We also remove stop words and rare words (e.g. those occurring less than three times in the commit messages). 
+
+We again use NLTK for parsing the code changes of a given commit. In particular, each change file in the code changes is parsed into a set of deleted and added lines, and each line is parsed into a sequence of words. We ignore comments and blank lines in the change file (see Figure~\ref{fig:code}). Following a previous work~\cite{white2015toward}, we replace a number (i.e., an integer, real number, hexadecimal number) with a special \texttt{<num>} token. We also replace rare code token (e.g. those occurring less than three times in the commit codes) and tokens existing in test data but absent in the training data with a special \texttt{<unk>} token. We add a \texttt{<deleted>} token or a \texttt{<added>} token at the beginning of deleted or added line respectively so that DeepJIT recognizes whether this code line is a deleted line or an added line.
 
 We represent each word in the commit message and code changes as a $d$-dimensional vector. After the preprocessing step,  $\mathcal{X}^{m}_i$ and $\mathcal{X}^{c}_i$, which are the encoded data of the commit message and code changes respectively, are input to the convolutional layers to generate the commit message and code changes features. In the convolutional layers, the commit messages and code changes are processed independently to extract the features based on each type of textual information. These features from the commit messages and code changes are then combined into a unified feature representation, and followed by a linear hidden layer connected to output layer used to produce the output label $\mathcal{Y}$ indicating whether the commit change $x_i$ is clean or contains a buggy code. 
 
@@ -71,7 +73,7 @@ The results of the max pooling operation from each filter are then used to form 
 
 \begin{figure*}
 	\center
-	\includegraphics[scale=0.25]{figs/code_framework.pdf}
+	\includegraphics[width=0.8\linewidth]{figs/code_framework.pdf}
 	\caption{The overall structure of convolutional neural network for each change file in code change. The first convolutional and pooling layers use to learn the semantic features of each added or removed code line based on the words within the added or removed line, and the subsequent convolutional and pooling layers aim to learn the interactions between added or removed code line with respect to the code change structure. The output of the convolutional neural network is the embedding vector $\textbf{z}_{\overline{\textbf{F}}_{i}}$ representing the salient features of the each change file.}
 	\label{fig:code}
 \end{figure*}
@@ -140,9 +142,9 @@ In the training process, DeepJIT aims to learn the following parameters: the
 word embedding matrices of commit messages and commit code in a given commit, the convolutional layers matrices, the weights and bias of
 the fully connected layer and the output layer. 
 
-In the \emph{Just-In-Time} defect prediction, only a few commits contain a buggy code while a large number of commits are clean. Such an imbalance nature increases the difficulty in learning a prediction function~\cite{chawla2004special}. Inspired by~\cite{zhou2006training, kukar1998cost}, we propose an unequal misclassification loss function which helps to reduce the negative influence of the imbalanced data. 
+\emph{Just-In-Time} defect prediction datasets often suffer the imbalance problem: only a few commits contain a buggy code while a large number of commits are clean. This imbalance nature increases the difficulty in learning a prediction function~\cite{chawla2004special}. Specifically, the imbalance problem may affect the performance of a defect prediction model as the overall accuracy is biased to the majority class (e.g., commits containing a buggy code), leading to misclassification of the minority class (e.g., commits containing a non-buggy code).  Inspired by~\cite{zhou2006training, kukar1998cost}, we propose an unequal misclassification loss function which specifically aims to reduce the negative influence of the imbalanced data. Unlike traditional methods, this ``cost-senstive'' learning technique does \emph{not} treat all misclassification equally. Instead, we impose a higher cost on misclassification of the minority class (i.e., buggy commits) than we do with misclassification of the majority class (i.e., clearn commits). Details of this technique is as follows. 
 
-Let $\textbf{w}_\textbf{n}$ and $\textbf{w}_\textbf{p}$ are the cost of incorrectly associating a commit change and the cost of missing a buggy commit change, respectively. The parameters of DeepJIT can be learned by minimizing the following objective function:
+Let $\textbf{w}_\textbf{n}$ and $\textbf{w}_\textbf{p}$ denote the cost of incorrectly associating a commit change and the cost of missing a buggy commit change, respectively. The parameters of DeepJIT can be learned by minimizing the following objective function:
 \begin{equation} %\footnotesize
 \label{eq:cost}
 \begin{split}

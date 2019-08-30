@@ -2,10 +2,10 @@
 \label{sec:conclusion}
 In this paper, we propose an end-to-end deep learning model (namely DeepJIT) for \emph{Just-In-Time} defect prediction problem. For a given commit, DeepJIT automatically extracts features from the commit message and the set of code changes. These features are then combined to evaluate how likely the commit is buggy. DeepJIT also allows users to add their manually crafted features to make it more robust. We evaluate DeepJIT on two popular software projects (i.e. QT and OPENSTACK) on three evaluation settings (i.e. cross-validation, short-period, and long-period). The evaluation results show that compared to the best performing state-of-the-art baseline (DBNJIT), the best variant of DeepJIT (DeepJIT-Combined) achieves improvements of 10.50\%, 10.36\%, and 11.02\% in the project QT and 9.51\%, 13.69\%, 12.22\% in the project OPENSTACK in terms of the Area Under the Curve (AUC).
 
-Our future work involves extending our evaluation to other open source and commercial projects. We also plan to extend DeepJIT using attention neural network~\cite{yin2016abcnn} so that our model can explain its predictions to software practitioners. We also plan to implement DeepJIT into a tool (e.g. a Github plugin) to assess its usefulness in practice.
+Our future work involves extending our evaluation to other open source and commercial projects. We also plan to extend DeepJIT using attention neural network~\cite{yin2016abcnn} so that our model can explain its predictions to software practitioners. We also plan to implement DeepJIT into a tool (e.g. a GitHub plugin) to assess its usefulness in practice.
 
 \noindent \textbf{Dataset and Code.} The dataset and code for DeepJIT are available at~\url{https://github.com/AnonymousAccountConf/DeepJTT_MSR}.
 
-\noindent \textbf{Acknowledgements.} This research was partially supported by JSPS KAKENHI Grant Numbers JP15H05306 and JP18H03222.
+\noindent \textbf{Acknowledgements.} This research was partially supported by Singapore National Research Foundation (award number: NRF2016-NRF-ANR003) and JSPS KAKENHI Grant Numbers JP15H05306 and JP18H0322.
 
 %, e.g., identification of valid commits in automated program repair~\cite{xiong2018identifying}, assignment of commits to developers for code review~\cite{thongtanunam2015should, zanjani2016automatically}
